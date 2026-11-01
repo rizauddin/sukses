@@ -1,0 +1,1401 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#3e6651">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" href="./icons/icon-192.png" type="image/png">
+  <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png">
+  <title>Sukses</title>
+  <style>
+    /* V2 design tokens: colour, type, spacing and surfaces. */
+    :root { color-scheme:light dark; --bg:#f7f6ef; --surface:#fffef9; --surface-alt:#eaeee5; --ink:#283b32; --muted:#53645a; --accent:#3e6651; --on-accent:#fff; --line:#d6ded2; --control-line:#748777; --warning:#754915; --gold:#806019; --gold-bg:#f1ead9; --badge-mint-bg:#e5eee1; --badge-gold-bg:#f4ebd4; --badge-blue-bg:#e1ecf0; --badge-blue-ink:#41677a; --badge-rose-bg:#f0e4e4; --badge-rose-ink:#845a60; --shadow:0 6px 24px #283b3205; --space-1:.25rem; --space-2:.5rem; --space-3:.75rem; --space-4:1rem; --space-5:1.25rem; --space-6:1.5rem; --space-8:2rem; --space-10:2.5rem; --text-xs:.75rem; --text-sm:.875rem; --text-base:1rem; --text-lg:1.125rem; --text-xl:1.5rem; --text-2xl:2rem; --radius-sm:.75rem; --radius-md:1.25rem; --radius-lg:1.75rem; --radius-pill:999px; }
+    @media(prefers-color-scheme:dark) { :root:not([data-theme="light"]) { --bg:#19231e; --surface:#233128; --surface-alt:#2c3e32; --ink:#edf1e7; --muted:#b7c5b8; --accent:#aecab0; --on-accent:#19231e; --line:#3f5546; --control-line:#708c77; --warning:#f1c48c; --gold:#e7c27b; --gold-bg:#3c3420; --badge-mint-bg:#2d4835; --badge-gold-bg:#463c25; --badge-blue-bg:#2a3e48; --badge-blue-ink:#aacbd8; --badge-rose-bg:#473339; --badge-rose-ink:#ddb8be; --shadow:none; } }
+    :root[data-theme="dark"] { color-scheme:dark; --bg:#19231e; --surface:#233128; --surface-alt:#2c3e32; --ink:#edf1e7; --muted:#b7c5b8; --accent:#aecab0; --on-accent:#19231e; --line:#3f5546; --control-line:#708c77; --warning:#f1c48c; --gold:#e7c27b; --gold-bg:#3c3420; --badge-mint-bg:#2d4835; --badge-gold-bg:#463c25; --badge-blue-bg:#2a3e48; --badge-blue-ink:#aacbd8; --badge-rose-bg:#473339; --badge-rose-ink:#ddb8be; --shadow:none; }
+    :root[data-theme="light"] { color-scheme:light; }
+    * { box-sizing:border-box; }
+    [hidden] { display:none !important; }
+    body { margin:0; min-height:100svh; background:var(--bg); color:var(--ink); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; font-size:var(--text-base); line-height:1.5; overflow-wrap:anywhere; -webkit-font-smoothing:antialiased; }
+    button,input,select { font:inherit; }
+    button { min-width:44px; min-height:44px; border:1px solid transparent; border-radius:var(--radius-sm); padding:.625rem 1rem; background:var(--surface-alt); color:var(--ink); cursor:pointer; transition:background .16s ease,transform .16s ease; overflow-wrap:anywhere; }
+    button:active:not(:disabled) { transform:translateY(1px); }
+    button:disabled { cursor:default; opacity:.6; }
+    button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible { outline:3px solid var(--accent); outline-offset:3px; }
+    input,select { width:100%; min-width:0; min-height:48px; border:1px solid var(--control-line); border-radius:var(--radius-sm); padding:.65rem .75rem; background:var(--surface); color:var(--ink); }
+    select { padding-inline:.35rem; }
+    label { display:block; margin:var(--space-4) 0; }
+    label > span { display:block; margin-bottom:var(--space-2); font-size:var(--text-sm); font-weight:500; }
+    h1,h2,h3,p,dl { margin:0; }
+    h1 { font-size:1.25rem; font-weight:650; letter-spacing:-.06em; }
+    h2 { font-size:var(--text-xl); font-weight:550; line-height:1.25; letter-spacing:-.035em; }
+    h3 { font-size:var(--text-base); font-weight:600; line-height:1.35; }
+    .muted,.hint { color:var(--muted); }
+    .hint { font-size:var(--text-sm); line-height:1.6; }
+    .eyebrow { color:var(--muted); font-size:var(--text-xs); font-weight:550; letter-spacing:.09em; text-transform:uppercase; }
+    .sr-only { position:absolute !important; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+    .icon { display:inline-block; width:1.25rem; height:1.25rem; flex-shrink:0; fill:none; stroke:currentColor; stroke-width:1.7; stroke-linecap:round; stroke-linejoin:round; vertical-align:middle; }
+    .symbols { position:absolute; width:0; height:0; overflow:hidden; }
+    .shell { width:min(100%,65rem); margin:auto; padding:max(.75rem,env(safe-area-inset-top)) max(clamp(.5rem,5vw,1.75rem),env(safe-area-inset-right)) calc(max(var(--nav-height,4rem),6.5rem + env(safe-area-inset-bottom)) + var(--space-3)) max(clamp(.5rem,5vw,1.75rem),env(safe-area-inset-left)); }
+    .app-header { display:flex; align-items:center; justify-content:space-between; gap:var(--space-3); min-height:44px; margin-bottom:var(--space-4); }
+    .brand { display:flex; align-items:center; gap:var(--space-2); }
+    .brand-mark { display:grid; place-items:center; width:1.875rem; height:1.875rem; border-radius:.65rem; background:var(--surface-alt); color:var(--accent); }
+    .brand-mark .icon { width:1.125rem; height:1.125rem; }
+    .star-pill { display:flex; align-items:center; gap:.375rem; padding:.375rem .75rem; background:var(--gold-bg); color:var(--gold); border-radius:var(--radius-pill); font-size:var(--text-sm); font-weight:600; font-variant-numeric:tabular-nums; }
+    .star-pill .icon { width:1rem; height:1rem; fill:currentColor; stroke:none; }
+    .app-nav { position:fixed; z-index:5; left:0; right:0; bottom:0; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:var(--space-1); padding:.375rem max(.75rem,env(safe-area-inset-right)) max(.375rem,env(safe-area-inset-bottom)) max(.75rem,env(safe-area-inset-left)); border-top:1px solid var(--line); background:var(--bg); }
+    .nav-item { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:.15rem; padding:.35rem .2rem; min-height:52px; background:transparent; color:var(--muted); font-size:var(--text-xs); border-radius:var(--radius-sm); }
+    .nav-item .icon { width:1.2rem; height:1.2rem; }
+    .nav-item[aria-current="page"] { color:var(--accent); background:var(--surface-alt); font-weight:600; }
+    main { min-width:0; }
+    .view { animation:view-in .2s ease-out; }
+    .view-heading { margin:var(--space-6) 0; }
+    .view-heading > p { margin-top:var(--space-2); }
+    .focus-view { max-width:28rem; margin:auto; text-align:center; }
+    .focus-heading .eyebrow { margin-bottom:var(--space-1); }
+    #greeting { font-size:clamp(1.2rem,5vw,1.6rem); font-weight:500; letter-spacing:-.035em; }
+    .modes { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,5rem),1fr)); gap:.25rem; margin:var(--space-4) 0 0; padding:.25rem; border-radius:var(--radius-pill); background:var(--surface-alt); }
+    .modes button { min-height:44px; padding:.5rem .25rem; border-radius:var(--radius-pill); background:transparent; color:var(--muted); font-size:var(--text-sm); line-height:1.25; }
+    .modes button[aria-pressed="true"] { background:var(--surface); color:var(--ink); font-weight:600; box-shadow:0 1px 5px #283b3212; }
+    .dial { position:relative; display:grid; place-items:center; width:min(66vw,29svh,17rem); max-width:100%; aspect-ratio:1; margin:var(--space-3) auto var(--space-2); container-type:inline-size; }
+    .dial > svg { position:absolute; inset:0; width:100%; height:100%; transform:rotate(-90deg); }
+    .dial circle { fill:none; }
+    .track { stroke:var(--line); stroke-width:1.25; }
+    #arc { stroke:var(--accent); stroke-width:1.8; stroke-linecap:round; transition:stroke-dashoffset .9s linear; }
+    .dial-inner { position:relative; width:100%; padding:var(--space-2); }
+    .time { font-size:clamp(2rem,17vw,5.5rem); font-weight:450; line-height:1.1; font-variant-numeric:tabular-nums; letter-spacing:-.065em; }
+    @supports(font-size:1cqi) { .time { font-size:clamp(2rem,25cqi,5.5rem); } }
+    .phase { display:flex; align-items:center; justify-content:center; gap:.4rem; margin-top:var(--space-2); font-size:var(--text-sm); color:var(--muted); }
+    .phase::before { content:""; width:6px; height:6px; border-radius:50%; background:var(--muted); }
+    .dial[data-status="running"] .phase::before { background:var(--accent); }
+    .dial[data-status="paused"] .phase::before { background:var(--gold); }
+    .dial[data-status="completed"] .phase::before { background:var(--accent); }
+    .message { color:var(--muted); font-size:var(--text-sm); line-height:1.5; margin:var(--space-2) 0 var(--space-3); }
+    .message[data-important="false"] { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; margin:0; }
+    .primary { display:flex; align-items:center; justify-content:center; gap:var(--space-2); width:100%; min-height:52px; border-radius:var(--radius-md); background:var(--accent); color:var(--on-accent); font-size:var(--text-lg); font-weight:600; }
+    .primary .icon { width:1.125rem; height:1.125rem; }
+    .secondary { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,7rem),1fr)); gap:var(--space-2); margin-top:var(--space-1); }
+    .secondary button { background:transparent; color:var(--muted); }
+    .secondary .icon { width:1rem; height:1rem; margin-right:.35rem; }
+    .focus-summary { display:flex; align-items:center; justify-content:space-between; gap:var(--space-4); padding:var(--space-3) .25rem; margin-top:var(--space-2); text-align:left; }
+    .today-stat { display:flex; align-items:center; gap:var(--space-2); }
+    .today-stat > .icon { color:var(--accent); }
+    .today-stat dl { display:flex; align-items:baseline; gap:.25rem; }
+    .today-stat dd { display:inline; margin:0; font-weight:600; font-variant-numeric:tabular-nums; }
+    .today-stat dt { order:2; display:inline; font-size:var(--text-sm); color:var(--muted); }
+    .cycle { color:var(--muted); font-size:var(--text-xs); }
+    .cycle-dots { display:flex; justify-content:flex-end; gap:.35rem; margin-bottom:.35rem; }
+    .cycle-dots span { width:6px; height:6px; border-radius:50%; background:var(--line); }
+    .cycle-dots span[data-complete="true"] { background:var(--accent); }
+    .milestone-preview { display:flex; align-items:center; gap:var(--space-3); width:100%; padding:.625rem .75rem; border:1px solid var(--line); border-radius:var(--radius-md); background:var(--surface); text-align:left; box-shadow:var(--shadow); }
+    .mini-medallion { display:grid; place-items:center; flex-shrink:0; width:2.25rem; height:2.25rem; color:var(--accent); border-radius:50%; background:var(--surface-alt); }
+    .milestone-copy { flex:1; min-width:0; }
+    .milestone-copy strong { display:block; font-size:var(--text-sm); font-weight:550; }
+    .milestone-copy > span { display:block; color:var(--muted); font-size:var(--text-xs); }
+    .milestone-preview > .icon { width:1rem; height:1rem; color:var(--muted); }
+    .page-view { max-width:50rem; margin:0 auto; }
+    .card,.panel { padding:var(--space-5); border:1px solid var(--line); border-radius:var(--radius-md); background:var(--surface); box-shadow:var(--shadow); }
+    .totals { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:var(--space-4); padding:var(--space-5); margin:0 0 var(--space-4); }
+    .totals dt { color:var(--muted); font-size:var(--text-sm); }
+    .totals dd { margin:var(--space-1) 0 0; font-size:var(--text-2xl); font-weight:550; letter-spacing:-.04em; font-variant-numeric:tabular-nums; }
+    .next-card { margin-bottom:var(--space-6); }
+    .next-card h3 { margin:var(--space-1) 0 var(--space-3); }
+    .next-card .hint { margin-top:var(--space-2); }
+    progress { display:block; width:100%; height:5px; border:0; border-radius:var(--radius-pill); overflow:hidden; accent-color:var(--accent); background:var(--surface-alt); }
+    progress::-webkit-progress-bar { background:var(--surface-alt); border-radius:var(--radius-pill); }
+    progress::-webkit-progress-value { background:var(--accent); border-radius:var(--radius-pill); }
+    progress::-moz-progress-bar { background:var(--accent); border-radius:var(--radius-pill); }
+    .badge-grid { list-style:none; padding:0; margin:0; display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,max(8.5rem,30%)),1fr)); gap:var(--space-4); }
+    .badge-card { position:relative; padding:var(--space-5) var(--space-3); text-align:center; border:1px solid var(--line); border-radius:var(--radius-md); background:var(--surface); }
+    .badge-medallion { display:grid; place-items:center; width:4rem; height:4rem; margin:0 auto var(--space-4); border-radius:1.4rem; background:var(--surface-alt); color:var(--muted); box-shadow:inset 0 0 0 1px var(--line); }
+    .badge-medallion .icon { width:2rem; height:2rem; stroke-width:1.4; }
+    .badge-card[data-earned="true"] .badge-medallion { color:var(--accent); background:var(--badge-mint-bg); box-shadow:inset 0 0 0 1px var(--line); }
+    .badge-card[data-earned="true"][data-tone="gold"] .badge-medallion { color:var(--gold); background:var(--badge-gold-bg); box-shadow:inset 0 0 0 1px var(--line); }
+    .badge-card[data-earned="true"][data-tone="blue"] .badge-medallion { color:var(--badge-blue-ink); background:var(--badge-blue-bg); box-shadow:inset 0 0 0 1px var(--line); }
+    .badge-card[data-earned="true"][data-tone="rose"] .badge-medallion { color:var(--badge-rose-ink); background:var(--badge-rose-bg); box-shadow:inset 0 0 0 1px var(--line); }
+    .badge-card h3 { font-size:var(--text-base); min-height:2.7em; }
+    .badge-requirement { font-size:var(--text-xs); color:var(--muted); margin:.25rem 0 .75rem; }
+    .badge-state { font-size:var(--text-xs); color:var(--muted); margin-top:var(--space-3); }
+    .badge-lock { position:absolute; top:var(--space-3); right:var(--space-3); color:var(--muted); }
+    .badge-lock .icon { width:.875rem; height:.875rem; }
+    .achievement-notes { margin-top:var(--space-5); }
+    summary { min-height:44px; padding:.65rem 0; cursor:pointer; font-weight:550; font-size:var(--text-sm); }
+    details.panel { margin-bottom:var(--space-4); }
+    details.panel > summary { padding:0; display:list-item; align-content:center; }
+    details.panel[open] > summary { margin-bottom:var(--space-3); }
+    .settings-stack { display:grid; gap:var(--space-4); }
+    .settings-stack > .card h3 { margin-bottom:var(--space-4); }
+    .preference-section h3 { margin-bottom:var(--space-4); }
+    .preferences { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,9rem),1fr)); gap:var(--space-4); }
+    .preferences label { margin:0; }
+    .nickname-control { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:var(--space-2); }
+    .icon-button { display:grid; place-items:center; width:48px; padding:8px; border:1px solid var(--control-line); background:var(--surface); }
+    .icon-button .icon { width:20px; height:20px; }
+    .duration-fields { display:grid; grid-template-columns:1fr; gap:var(--space-4); }
+    .duration-fields label { display:flex; flex-direction:column; justify-content:space-between; gap:var(--space-2); margin:0; }
+    .duration-fields label > span { margin:0; }
+    #settingsForm { display:grid; gap:var(--space-4); }
+    #settingsForm > label { margin:0; }
+    .save-button { justify-self:start; background:var(--accent); color:var(--on-accent); padding-inline:1.25rem; font-weight:550; }
+    #focusSounds > * + * { margin-top:var(--space-4); }
+    .volume-control label { display:flex; justify-content:space-between; gap:var(--space-3); }
+    .volume-control input[type="range"] { width:100%; min-height:44px; padding:0; border:0; accent-color:var(--accent); background:transparent; }
+    .volume-control output { font-variant-numeric:tabular-nums; }
+    #focusSounds[data-enabled="false"] #soundVolumeControl, #focusSounds[data-enabled="false"] #breakSoundControl { color:var(--muted); background:var(--surface-alt); border-radius:var(--radius-sm); }
+    .sound-choice { display:flex; flex-wrap:wrap; gap:var(--space-3); align-items:flex-end; margin-top:var(--space-4); }
+    .sound-choice label { flex:1 1 10rem; margin:0; }
+    .sound-choice button { min-height:48px; }
+    #completionSounds > * + * { margin-top:var(--space-4); }
+    .data-actions { display:grid; gap:var(--space-3); }
+    input[type="file"] { font-size:var(--text-sm); max-width:100%; }
+    input[type="file"]::file-selector-button { min-height:44px; max-width:100%; margin-right:.5rem; border:0; border-radius:.5rem; padding:.5rem; font:inherit; white-space:normal; }
+    .danger-button { color:var(--warning); border:1px solid var(--control-line); background:transparent; }
+    .help-copy { color:var(--muted); font-size:var(--text-sm); line-height:1.65; }
+    .help-copy p + p { margin-top:var(--space-3); }
+    .quiet-button { background:transparent; color:var(--muted); font-size:var(--text-sm); }
+    .welcome { max-width:26rem; margin:var(--space-8) auto; padding:var(--space-6); }
+    .welcome > .mini-medallion { width:3rem; height:3rem; margin-bottom:var(--space-6); }
+    .welcome > p { margin:var(--space-3) 0 var(--space-5); }
+    .welcome h2 { font-size:var(--text-2xl); }
+    .welcome .primary { margin-top:var(--space-4); }
+    .welcome-settings { width:100%; margin-top:var(--space-4); }
+    .notice { max-width:50rem; margin:var(--space-4) auto 0; padding:var(--space-3) var(--space-4); border:1px solid var(--control-line); border-radius:var(--radius-sm); color:var(--warning); background:var(--surface); font-size:var(--text-sm); line-height:1.5; }
+    dialog { width:min(30rem,calc(100% - 1.5rem)); max-width:calc(100% - 1.5rem); max-height:calc(100svh - 2rem); overflow-y:auto; padding:clamp(.75rem,4vw,1.5rem); border:1px solid var(--line); border-radius:var(--radius-lg); background:var(--surface); color:var(--ink); text-align:left; box-shadow:0 20px 80px #0002; }
+    dialog::backdrop { background:#18231d66; backdrop-filter:blur(4px); }
+    dialog[open] { display:block; }
+    dialog:not([open]) { display:none; }
+    dialog[data-fallback] { position:fixed; inset:50% auto auto 50%; transform:translate(-50%,-50%); z-index:10; box-shadow:0 0 0 100vmax #0008; }
+    dialog h2 { margin-bottom:var(--space-4); }
+    dialog p { margin-bottom:var(--space-4); font-size:var(--text-sm); line-height:1.6; white-space:pre-line; }
+    dialog .secondary { margin-top:var(--space-5); }
+    dialog .secondary button { border:1px solid var(--control-line); color:var(--ink); }
+    #confirmData { background:var(--accent); color:var(--on-accent); border-color:transparent; }
+    @keyframes view-in { from { opacity:0; transform:translateY(4px); } to { opacity:1; transform:translateY(0); } }
+    @media(min-width:720px) { .duration-fields { grid-template-columns:repeat(3,minmax(0,1fr)); } .shell { padding-top:var(--space-6); padding-bottom:var(--space-8); } .app-header { margin-bottom:var(--space-10); } .brand { order:1; } .star-pill { order:3; } .app-nav { order:2; position:static; display:flex; gap:.25rem; margin-inline:auto; padding:.25rem; border:1px solid var(--line); border-radius:var(--radius-pill); background:var(--surface); } .nav-item { flex-direction:row; gap:.5rem; min-height:44px; padding:.5rem 1rem; font-size:var(--text-sm); border-radius:var(--radius-pill); } .nav-item .icon { width:1rem; height:1rem; } .focus-view { padding-top:var(--space-3); } .dial { width:20rem; margin-block:var(--space-5); } .view-heading { margin-top:0; } }
+    @media(max-height:740px) and (max-width:719px) { .dial { width:min(60vw,12rem); margin-block:.5rem; } .app-header { margin-bottom:.5rem; } .modes { margin-top:.75rem; } .focus-summary { margin-top:.25rem; padding-block:.5rem; } }
+    @media(prefers-reduced-motion:reduce) { *,*::before,*::after { animation:none !important; transition:none !important; scroll-behavior:auto !important; } }
+  </style>
+</head>
+<body>
+  <svg class="symbols" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><defs><symbol id="i-focus" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7v5l3 2"/></symbol><symbol id="i-star" viewBox="0 0 24 24"><path d="m12 2.5 2.9 5.9 6.5.9-4.7 4.6 1.1 6.5-5.8-3.1-5.8 3.1 1.1-6.5-4.7-4.6 6.5-.9Z"/></symbol><symbol id="i-award" viewBox="0 0 24 24"><path d="m8 14-2 7 6-3 6 3-2-7"/><circle cx="12" cy="8.5" r="6"/></symbol><symbol id="i-settings" viewBox="0 0 24 24"><path d="M4 7h16M4 17h16"/><circle cx="8" cy="7" r="2.5" fill="var(--bg)"/><circle cx="16" cy="17" r="2.5" fill="var(--bg)"/></symbol><symbol id="i-play" viewBox="0 0 24 24"><path d="m9 5 10 7-10 7Z"/></symbol><symbol id="i-pause" viewBox="0 0 24 24"><path d="M8 5v14M16 5v14"/></symbol><symbol id="i-reset" viewBox="0 0 24 24"><path d="M4 9a8 8 0 1 1 0 6M4 3v6h6"/></symbol><symbol id="i-skip" viewBox="0 0 24 24"><path d="m5 5 10 7-10 7ZM19 5v14"/></symbol><symbol id="i-arrow" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></symbol><symbol id="i-shuffle" viewBox="0 0 24 24"><path d="M3 6h3c5 0 7 12 12 12h3M3 18h3c5 0 7-12 12-12h3m-3-3 3 3-3 3m0 6 3 3-3 3"/></symbol><symbol id="i-check" viewBox="0 0 24 24"><path d="m6 12 4 4 8-9"/></symbol><symbol id="i-lock" viewBox="0 0 24 24"><rect x="6" y="10" width="12" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></symbol><symbol id="i-sprout" viewBox="0 0 24 24"><path d="M12 21V11m0 5C5 16 3 11 4 7c5 0 8 3 8 9Zm0-3c0-6 3-9 8-9 1 5-2 9-8 9Z"/></symbol><symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></symbol><symbol id="i-layers" viewBox="0 0 24 24"><path d="m12 3 9 5-9 5-9-5Zm-9 9 9 5 9-5M3 16l9 5 9-5"/></symbol><symbol id="i-mountain" viewBox="0 0 24 24"><path d="m2 20 8-15 5 8 3-5 4 12Zm5-9 3 2 3-3"/></symbol><symbol id="i-gem" viewBox="0 0 24 24"><path d="m3 8 4-5h10l4 5-9 13Zm0 0h18M8 8l4 13 4-13M7 3l1 5 4-5 4 5 1-5"/></symbol><symbol id="i-laurel" viewBox="0 0 24 24"><path d="M8 21C1 16 1 7 6 3m10 18c7-5 7-14 2-18M4 8l4 1-1-4M3 13l4 1-1-4m-1 8 4-1-2-3m13-6-4 1 1-4m4 8-4 1 1-4m1 8-4-1 2-3"/><path d="m12 6 1.4 3 3.1.4-2.2 2.2.5 3.1-2.8-1.5-2.8 1.5.5-3.1-2.2-2.2 3.1-.4Z"/></symbol></defs></svg>
+  <div class="shell" id="appShell">
+    <header class="app-header">
+      <div class="brand"><span class="brand-mark" aria-hidden="true"><svg class="icon" aria-hidden="true"><use href="#i-focus"/></svg></span><h1>Sukses</h1></div>
+      <div class="star-pill"><svg class="icon" aria-hidden="true"><use href="#i-star"/></svg><span id="starCount">0</span><span class="sr-only" data-copy="stars">Total stars</span></div>
+      <nav id="appNav" class="app-nav" aria-label="Main navigation" hidden>
+        <button id="navFocus" type="button" class="nav-item" data-view="focus" aria-controls="focusView" aria-current="page"><svg class="icon" aria-hidden="true"><use href="#i-focus"/></svg><span data-copy="focus">Focus</span></button>
+        <button id="navAchievements" type="button" class="nav-item" data-view="achievements" aria-controls="achievementsView"><svg class="icon" aria-hidden="true"><use href="#i-award"/></svg><span data-copy="achievements">Achievements</span></button>
+        <button id="navSettings" type="button" class="nav-item" data-view="settings" aria-controls="settingsView"><svg class="icon" aria-hidden="true"><use href="#i-settings"/></svg><span data-copy="settings">Settings</span></button>
+      </nav>
+    </header>
+    <main>
+      <p id="storageNotice" class="notice" role="status" hidden></p>
+      <p id="ownershipNotice" class="notice" role="status" hidden></p>
+
+      <section id="welcome" class="card welcome" hidden aria-labelledby="welcomeTitle">
+        <span class="mini-medallion" aria-hidden="true"><svg class="icon" aria-hidden="true"><use href="#i-sprout"/></svg></span>
+        <h2 id="welcomeTitle" tabindex="-1" data-copy="welcome">What should we call you?</h2>
+        <p class="muted" data-copy="nameHint">An optional nickname, saved on this device.</p>
+        <form id="onboarding">
+          <label><span data-copy="nickname">Nickname (optional)</span><input id="welcomeName" type="text" autocomplete="off" aria-describedby="nameLimit"></label>
+          <p id="nameLimit" class="hint" data-copy="nameLimit">Up to 30 visible characters.</p>
+          <button id="suggestWelcome" type="button" data-copy="suggest">Surprise me</button>
+          <div class="secondary"><button type="submit" data-copy="continue">Continue</button><button id="skipWelcome" type="button" data-copy="skip">Skip</button></div>
+        </form>
+        <button id="welcomeSettings" class="quiet-button welcome-settings" type="button" data-view="settings" data-copy="welcomeSettings">Language &amp; settings</button>
+      </section>
+      <section id="focusView" class="view focus-view" aria-labelledby="greeting" hidden>
+        <div class="focus-heading"><p class="eyebrow" data-copy="focusEyebrow">A little space to focus</p><h2 id="greeting" tabindex="-1"></h2></div>
+        <p id="automaticStatus" class="hint" hidden></p>
+        <div class="modes" role="group" aria-label="Timer mode" id="modes">
+          <button type="button" data-mode="focus" aria-pressed="true" data-copy="focus">Focus</button>
+          <button type="button" data-mode="shortBreak" aria-pressed="false" data-copy="shortBreak">Short break</button>
+          <button type="button" data-mode="longBreak" aria-pressed="false" data-copy="longBreak">Long break</button>
+        </div>
+        <div id="timerDial" class="dial" data-status="idle">
+          <svg viewBox="0 0 100 100" aria-hidden="true"><circle class="track" cx="50" cy="50" r="46.5"/><circle id="arc" cx="50" cy="50" r="46.5" pathLength="1" stroke-dasharray="1"/></svg>
+          <div class="dial-inner"><div class="time" id="countdown" role="timer" aria-live="off" aria-label="Time remaining">25:00</div><p class="phase" id="phase">Ready</p></div>
+        </div>
+        <p id="message" class="message" data-important="false" role="status" aria-live="polite" aria-atomic="true"></p>
+        <button type="button" id="primary" class="primary" disabled><svg class="icon" aria-hidden="true"><use id="primaryIcon" href="#i-play"/></svg><span id="primaryLabel">Start</span></button>
+        <div class="secondary"><button type="button" id="reset" disabled><svg class="icon" aria-hidden="true"><use href="#i-reset"/></svg><span data-copy="reset">Reset</span></button><button type="button" id="skip" disabled><svg class="icon" aria-hidden="true"><use href="#i-skip"/></svg><span data-copy="skip">Skip</span></button></div>
+        <button id="enableSound" class="quiet-button" type="button" data-copy="enableSound" hidden>Enable Sound</button>
+        <div class="focus-summary">
+          <div class="today-stat"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><dl><dt id="todayLabel">sessions today</dt><dd id="todayCount">0</dd></dl></div>
+          <div><div class="cycle-dots" aria-hidden="true"><span id="cycle-1"></span><span id="cycle-2"></span><span id="cycle-3"></span><span id="cycle-4"></span></div><p id="cycleProgress" class="cycle"></p></div>
+        </div>
+        <button id="achievementShortcut" type="button" class="milestone-preview" data-view="achievements" aria-controls="achievementsView"><span class="sr-only" data-copy="achievements">Achievements</span><span class="mini-medallion" aria-hidden="true"><svg class="icon" aria-hidden="true"><use href="#i-sprout"/></svg></span><span class="milestone-copy"><strong id="focusMilestoneName"></strong><span id="focusMilestoneHint"></span></span><svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+      </section>
+      <section id="achievementsView" class="view page-view" aria-labelledby="achievementsTitle" hidden>
+        <div class="view-heading"><h2 id="achievementsTitle" tabindex="-1" data-copy="achievements">Achievements</h2><p class="muted" data-copy="achievementIntro">Every session is a step forward.</p></div>
+        <dl class="card totals"><div><dt data-copy="totalFocus">Total focus sessions</dt><dd id="totalFocusCount">0</dd></div><div><dt data-copy="stars">Total stars</dt><dd id="achievementStars">0</dd></div></dl>
+        <section class="card next-card" aria-labelledby="nextMilestoneTitle"><p class="eyebrow" data-copy="nextMilestone">Your next milestone</p><h3 id="nextMilestoneTitle"></h3><progress id="nextMilestoneProgress" value="0" max="1" aria-labelledby="nextMilestoneTitle nextMilestoneHint"></progress><p id="nextMilestoneHint" class="hint"></p></section>
+        <div id="achievements"><ul class="badge-grid badges"><li id="card-first_step" class="badge-card" data-earned="false" data-tone="mint">
+            <span class="badge-lock" aria-hidden="true"><svg class="icon"><use id="badge-state-icon-first_step" href="#i-lock"/></svg></span>
+            <div class="badge-medallion"><svg class="icon" aria-hidden="true"><use href="#i-sprout"/></svg></div>
+            <h3 id="badge-name-first_step" data-copy="first_step">First Step</h3>
+            <p id="badge-requirement-first_step" class="badge-requirement"></p>
+            <progress id="badge-progress-first_step" value="0" max="1" aria-labelledby="badge-name-first_step badge-requirement-first_step"></progress>
+            <p id="badge-first_step" class="badge-state"></p>
+          </li><li id="card-getting_started" class="badge-card" data-earned="false" data-tone="gold">
+            <span class="badge-lock" aria-hidden="true"><svg class="icon"><use id="badge-state-icon-getting_started" href="#i-lock"/></svg></span>
+            <div class="badge-medallion"><svg class="icon" aria-hidden="true"><use href="#i-sun"/></svg></div>
+            <h3 id="badge-name-getting_started" data-copy="getting_started">Getting Started</h3>
+            <p id="badge-requirement-getting_started" class="badge-requirement"></p>
+            <progress id="badge-progress-getting_started" value="0" max="10" aria-labelledby="badge-name-getting_started badge-requirement-getting_started"></progress>
+            <p id="badge-getting_started" class="badge-state"></p>
+          </li><li id="card-focus_builder" class="badge-card" data-earned="false" data-tone="blue">
+            <span class="badge-lock" aria-hidden="true"><svg class="icon"><use id="badge-state-icon-focus_builder" href="#i-lock"/></svg></span>
+            <div class="badge-medallion"><svg class="icon" aria-hidden="true"><use href="#i-layers"/></svg></div>
+            <h3 id="badge-name-focus_builder" data-copy="focus_builder">Focus Builder</h3>
+            <p id="badge-requirement-focus_builder" class="badge-requirement"></p>
+            <progress id="badge-progress-focus_builder" value="0" max="50" aria-labelledby="badge-name-focus_builder badge-requirement-focus_builder"></progress>
+            <p id="badge-focus_builder" class="badge-state"></p>
+          </li><li id="card-focus_master" class="badge-card" data-earned="false" data-tone="mint">
+            <span class="badge-lock" aria-hidden="true"><svg class="icon"><use id="badge-state-icon-focus_master" href="#i-lock"/></svg></span>
+            <div class="badge-medallion"><svg class="icon" aria-hidden="true"><use href="#i-mountain"/></svg></div>
+            <h3 id="badge-name-focus_master" data-copy="focus_master">Focus Master</h3>
+            <p id="badge-requirement-focus_master" class="badge-requirement"></p>
+            <progress id="badge-progress-focus_master" value="0" max="100" aria-labelledby="badge-name-focus_master badge-requirement-focus_master"></progress>
+            <p id="badge-focus_master" class="badge-state"></p>
+          </li><li id="card-deep_worker" class="badge-card" data-earned="false" data-tone="rose">
+            <span class="badge-lock" aria-hidden="true"><svg class="icon"><use id="badge-state-icon-deep_worker" href="#i-lock"/></svg></span>
+            <div class="badge-medallion"><svg class="icon" aria-hidden="true"><use href="#i-gem"/></svg></div>
+            <h3 id="badge-name-deep_worker" data-copy="deep_worker">Deep Worker</h3>
+            <p id="badge-requirement-deep_worker" class="badge-requirement"></p>
+            <progress id="badge-progress-deep_worker" value="0" max="250" aria-labelledby="badge-name-deep_worker badge-requirement-deep_worker"></progress>
+            <p id="badge-deep_worker" class="badge-state"></p>
+          </li><li id="card-focus_legend" class="badge-card" data-earned="false" data-tone="gold">
+            <span class="badge-lock" aria-hidden="true"><svg class="icon"><use id="badge-state-icon-focus_legend" href="#i-lock"/></svg></span>
+            <div class="badge-medallion"><svg class="icon" aria-hidden="true"><use href="#i-laurel"/></svg></div>
+            <h3 id="badge-name-focus_legend" data-copy="focus_legend">Focus Legend</h3>
+            <p id="badge-requirement-focus_legend" class="badge-requirement"></p>
+            <progress id="badge-progress-focus_legend" value="0" max="500" aria-labelledby="badge-name-focus_legend badge-requirement-focus_legend"></progress>
+            <p id="badge-focus_legend" class="badge-state"></p>
+          </li></ul></div>
+        <details class="achievement-notes"><summary data-copy="starRulesTitle">How stars are earned</summary><div class="help-copy"><p data-copy="starRules">Each completed focus session earns one star, including custom durations of 5–90 minutes. Pausing and resuming is allowed. Breaks and skipped or reset attempts earn no stars. A fresh attempt after Reset can earn a star when completed.</p><p data-copy="cycleHint">Four sessions make a cycle, with no daily limit.</p></div></details>
+      </section>
+      <section id="settingsView" class="view page-view" aria-labelledby="settingsTitle" hidden>
+        <button id="onboardingBack" type="button" class="quiet-button" data-view="focus" data-copy="backToWelcome">Back to welcome</button>
+        <div class="view-heading"><h2 id="settingsTitle" tabindex="-1" data-copy="settings">Settings</h2><p class="muted" data-copy="settingsIntro">Make this space your own.</p></div>
+        <div class="settings-stack">
+          <section class="preference-section" aria-labelledby="personaliseTitle"><h3 id="personaliseTitle" data-copy="personalise">Language &amp; appearance</h3><div class="preferences">
+        <label><span data-copy="language">Language</span><select id="language"><option value="ms">Bahasa Melayu</option><option value="en" selected>English</option></select></label>
+        <label><span data-copy="theme">Appearance</span><select id="theme"><option value="system" data-copy="system">System</option><option value="light" data-copy="light">Light</option><option value="dark" data-copy="dark">Dark</option></select></label>
+      </div></section>
+          <div class="preferences">
+            <label><span data-copy="autoStartBreaks">Auto-start breaks</span><select id="autoStartBreaks"><option value="false" data-copy="off">Off</option><option value="true" data-copy="on">On</option></select></label>
+            <label><span data-copy="autoStartFocus">Auto-start focus sessions</span><select id="autoStartFocus"><option value="false" data-copy="off">Off</option><option value="true" data-copy="on">On</option></select></label>
+          </div><p class="hint" data-copy="autoHint">After returning, only the next session starts, from now.</p>
+          <section id="settings" class="card" aria-labelledby="timerSettingsTitle"><h3 id="timerSettingsTitle" data-copy="timerSettings">Name &amp; timer</h3><form id="settingsForm">
+          <div><label for="displayName" data-copy="nickname">Nickname (optional)</label><div class="nickname-control"><input id="displayName" type="text" autocomplete="off" aria-describedby="settingsHint"><button id="suggestSettings" class="icon-button" type="button"><svg class="icon" aria-hidden="true"><use href="#i-shuffle"/></svg><span class="sr-only" data-copy="suggest">Surprise me</span></button></div></div>
+          <div class="duration-fields"><label><span data-copy="focusMinutes">Focus (5–90 minutes)</span><input id="focusMinutes" type="number" min="5" max="90" step="1" required></label>
+          <label><span data-copy="shortBreakMinutes">Short break (1–30 minutes)</span><input id="shortBreakMinutes" type="number" min="1" max="30" step="1" required></label>
+          <label><span data-copy="longBreakMinutes">Long break (5–60 minutes)</span><input id="longBreakMinutes" type="number" min="5" max="60" step="1" required></label>
+          </div><p class="hint" id="settingsHint" data-copy="settingsHint">Name: up to 30 characters. New durations apply to the next session or after Reset. An idle timer updates immediately.</p>
+          <button type="submit" class="save-button" data-copy="save">Save settings</button>
+          <p id="settingsStatus" role="status"></p>
+        </form></section>
+          <section id="focusSounds" class="card" aria-labelledby="focusSoundsTitle">
+            <h3 id="focusSoundsTitle" data-copy="focusSounds">Focus Sounds</h3>
+            <div class="preferences">
+              <label><span data-copy="clockTicking">Clock Ticking</span><select id="tickingEnabled"><option value="false" data-copy="off">Off</option><option value="true" data-copy="on">On</option></select></label>
+              <label id="breakSoundControl"><span data-copy="tickDuringBreaks">Tick During Breaks</span><select id="tickDuringBreaks"><option value="false" data-copy="off">Off</option><option value="true" data-copy="on">On</option></select></label>
+            </div>
+            <div id="soundVolumeControl" class="volume-control"><label for="tickingVolume"><span data-copy="soundVolume">Volume</span> <output id="tickingVolumeValue" for="tickingVolume">20%</output></label><input id="tickingVolume" type="range" min="0" max="100" step="5" value="20" aria-describedby="soundHint"></div>
+            <button id="testSound" type="button" data-copy="testSound">Test Sound</button>
+            <p id="soundHint" class="hint" data-copy="soundHint">Soft ticking. Audio may stop when the screen is locked or the app is in the background.</p>
+            <p id="soundStatus" class="hint" role="status" hidden></p>
+          </section>
+          <section id="completionSounds" class="card" aria-labelledby="completionSoundsTitle">
+            <h3 id="completionSoundsTitle" data-copy="completionSounds">Session sounds</h3>
+            <div class="sound-choice"><label><span id="focusSoundLabel" data-copy="focusCompletionSound">Focus completion sound</span><select id="focusCompletionSound"><option value="true" data-copy="on">On</option><option value="false" data-copy="off">Off</option></select></label><button id="previewFocus" type="button" aria-labelledby="previewFocusLabel focusSoundLabel"><span id="previewFocusLabel" data-copy="preview">Preview</span></button></div>
+            <div class="sound-choice"><label><span id="breakSoundLabel" data-copy="breakCompletionSound">Break completion sound</span><select id="breakCompletionSound"><option value="true" data-copy="on">On</option><option value="false" data-copy="off">Off</option></select></label><button id="previewBreak" type="button" aria-labelledby="previewBreakLabel breakSoundLabel"><span id="previewBreakLabel" data-copy="preview">Preview</span></button></div>
+            <div class="sound-choice"><label><span id="cycleSoundLabel" data-copy="fullCycleSound">Full-cycle sound</span><select id="fullCycleSound"><option value="true" data-copy="on">On</option><option value="false" data-copy="off">Off</option></select></label><button id="previewCycle" type="button" aria-labelledby="previewCycleLabel cycleSoundLabel"><span id="previewCycleLabel" data-copy="preview">Preview</span></button></div>
+            <div class="volume-control"><label for="notificationVolume"><span data-copy="notificationVolume">Notification volume</span><output id="notificationVolumeValue" for="notificationVolume">40%</output></label><input id="notificationVolume" type="range" min="0" max="100" step="5" value="40" aria-describedby="completionHint"></div>
+            <p id="completionHint" class="hint" data-copy="completionHint">Gentle chimes while the app is active. Missed sounds are never replayed.</p>
+          </section>
+          <details id="dataSettings" class="panel">
+        <summary data-copy="backup">Backup and data</summary>
+        <p class="hint" data-copy="backupHint">Export a JSON backup manually. Import replaces data after a preview and confirmation. File limit: 5 MiB.</p>
+        <div class="data-actions">
+          <button id="exportData" type="button" data-copy="exportData">Export backup</button>
+          <label><span data-copy="importData">Import JSON backup</span><input id="importFile" type="file" accept=".json,application/json"></label>
+          <button id="clearData" class="danger-button" type="button" data-copy="clearData">Clear all local data</button>
+        </div>
+        <p class="hint" data-copy="privacy">No accounts, tracking or cloud sync. Browser and installed-app storage may be separate. Clearing browser data, uninstalling or changing devices may erase progress. Keep a backup.</p>
+        <p id="dataStatus" role="status"></p>
+      </details><details id="installHelp" class="panel">
+        <summary data-copy="installHeading">Install and use offline</summary>
+        <p class="hint" id="offlineStatus" role="status"></p>
+        <button id="installApp" type="button" data-copy="installApp" hidden>Install app</button>
+        <p class="hint" data-copy="iosHelp">On iPhone/iPad: open in Safari → Share → Add to Home Screen. Wording may vary by iOS version.</p>
+        <p class="hint" data-copy="androidHelp">On Android: use the install button when available, or look for Install app / Add to Home screen in the browser menu. Support varies by browser.</p>
+        <p class="hint" data-copy="offlineHint">Open once online and wait for ready status before reopening offline. Browsers may evict stored files. Sounds or alerts while the app is closed are not guaranteed.</p>
+      </details>
+          <details id="helpInfo" class="panel"><summary data-copy="helpTitle">About Sukses</summary><div class="help-copy"><p data-copy="tagline">Focus today. Flourish tomorrow.</p><p data-copy="cycleHint">Four sessions make a cycle, with no daily limit.</p><p data-copy="localProgress">Progress is saved on this device when storage is available. Clearing browser data or changing devices may erase your progress.</p><p data-copy="footer">The timer is saved on this device when storage is available. Reopen the app to check your session; background alerts are not guaranteed.</p></div></details>
+          <section id="updatePanel" class="panel" hidden>
+        <p id="updateStatus" role="status"></p>
+        <button id="applyUpdate" type="button" data-copy="applyUpdate">Update and reopen</button>
+      </section>
+        </div>
+      </section>
+      <p id="uiStatus" class="sr-only" role="status" aria-live="polite"></p>
+      <noscript><p>Enable JavaScript to use the timer. / Aktifkan JavaScript untuk menggunakan pemasa.</p></noscript>
+    </main>
+  </div>
+  <dialog id="dataDialog" role="dialog" aria-modal="true" aria-labelledby="dialogTitle" aria-describedby="dialogSummary dialogConsequence" hidden>
+    <h2 id="dialogTitle" tabindex="-1"></h2>
+    <p id="dialogSummary"></p>
+    <p id="dialogConsequence"></p>
+    <p id="dialogChanged" role="status" hidden></p>
+    <div class="secondary"><button id="cancelData" type="button" data-copy="cancel">Cancel</button><button id="confirmData" type="button"></button></div>
+  </dialog>
+  <script id="timer-core">
+  'use strict';
+  // Constants, profile/settings schema and local-load migration.
+  const TimerCore = (() => {
+    const KEY = 'sukses_state_v1';
+    const MODES = ['focus', 'shortBreak', 'longBreak'];
+    const DEFAULTS = { focus:25, shortBreak:5, longBreak:15 };
+    const RANGES = { focus:[5,90], shortBreak:[1,30], longBreak:[5,60] };
+    const BADGES = [ ['first_step',1], ['getting_started',10], ['focus_builder',50], ['focus_master',100], ['deep_worker',250], ['focus_legend',500] ];
+    const REWARD_FIELDS = ['completedFocusSessions','totalStars','dailyCounts','creditedSessionIds','unlockedBadges'];
+    const SOUND_DEFAULTS = {tickingEnabled:false,tickingStyle:'soft',tickingVolume:20,tickDuringBreaks:false,focusCompletionSound:true,breakCompletionSound:true,fullCycleSound:true,notificationVolume:40};
+    const OPTIONAL_SETTINGS = ['autoStartBreaks','autoStartFocus',...Object.keys(SOUND_DEFAULTS)];
+    const emptyRewards = () => ({ completedFocusSessions:0, totalStars:0, dailyCounts:{}, creditedSessionIds:[], unlockedBadges:{} });
+    const hasOwn = (object,key) => Object.prototype.hasOwnProperty.call(object,key);
+    const validTime = n => Number.isSafeInteger(n) && n >= 0;
+    const duration = (settings, mode) => settings[mode + 'Minutes'] * 60000;
+    const remaining = (timer, now) => timer.status === 'running' ? Math.max(0, timer.endAt - now) : timer.remainingMs;
+    function attempt(mode, settings, id) {
+      const ms = duration(settings, mode);
+      return { sessionId:id, mode, status:'idle', remainingMs:ms, endAt:null, sessionDurationMs:ms };
+    }
+    function initial(id) {
+      const settings = Object.fromEntries(MODES.map(mode => [mode + 'Minutes', DEFAULTS[mode]]));
+      return { schemaVersion:1, profile:{ displayName:'', nameType:'generated', onboardingCompleted:false }, settings:{ ...settings, language:'en', theme:'system', autoStartBreaks:false, autoStartFocus:false, ...SOUND_DEFAULTS }, timer:attempt('focus', settings, id), progress:{ cyclePosition:0, ...emptyRewards() } };
+    }
+    function cleanName(value) {
+      const text = typeof value === 'string' ? value.trim() : '';
+      // Intl.Segmenter counts graphemes; older browsers conservatively count code points.
+      const parts = typeof Intl !== 'undefined' && Intl.Segmenter ? Array.from(new Intl.Segmenter(undefined,{granularity:'grapheme'}).segment(text),p=>p.segment) : Array.from(text);
+      return parts.slice(0,30).join('');
+    }
+    const NAMES = {
+      ms:{ adjectives:['Tenang','Cekal','Ceria','Tekun'], animals:['Kancil','Penyu','Rusa','Arnab'] },
+      en:{ adjectives:['Quiet','Steady','Sunny','Patient'], animals:['Fox','Turtle','Deer','Rabbit'] }
+    };
+    function nickname(language, random = Math.random) {
+      const list = NAMES[language] || NAMES.ms;
+      return `${list.adjectives[Math.min(3,Math.max(0,Math.floor(random()*4)))]} ${list.animals[Math.min(3,Math.max(0,Math.floor(random()*4)))]}`;
+    }
+    function profile(s, value, generated) {
+      const displayName = cleanName(value) || cleanName(generated);
+      return { ...s, profile:{ displayName, nameType:displayName === s.profile.displayName ? s.profile.nameType : cleanName(value) ? 'custom' : 'generated', onboardingCompleted:true } };
+    }
+    function preferences(s, patch, now, id) {
+      const settled = reconcile(s,now);
+      const next = { ...settled, settings:{ ...settled.settings, ...patch } };
+      if (next.timer.status === 'idle') next.timer = attempt(next.timer.mode,next.settings,id);
+      return validate(next) ? next : settled;
+    }
+    // Reward history uses local calendar dates at settlement, never UTC date slices.
+    function localDateKey(now) {
+      const date = new Date(now);
+      return `${date.getFullYear().toString().padStart(4,'0')}-${(date.getMonth()+1).toString().padStart(2,'0')}-${date.getDate().toString().padStart(2,'0')}`;
+    }
+    function validDateKey(key) {
+      if (!/^[1-9]\d{3}-\d{2}-\d{2}$/.test(key)) return false;
+      // Validate the calendar independently of the device's current timezone.
+      const [year,month,day] = key.split('-').map(Number), date = new Date(0);
+      date.setUTCFullYear(year,month-1,day);
+      return date.getUTCFullYear() === year && date.getUTCMonth() === month-1 && date.getUTCDate() === day;
+    }
+    const record = value => value !== null && typeof value === 'object' && !Array.isArray(value);
+    function validRewards(p) {
+      const present = REWARD_FIELDS.filter(key => hasOwn(p,key)).length;
+      if (present === 0) return true; // Recognised M1/M2 history, migrated only on local load.
+      if (present !== REWARD_FIELDS.length || !validTime(p.completedFocusSessions) || p.totalStars !== p.completedFocusSessions) return false;
+      if (!Array.isArray(p.creditedSessionIds) || p.creditedSessionIds.length !== p.completedFocusSessions) return false;
+      if (p.creditedSessionIds.some(id => typeof id !== 'string' || !id.length || id.length > 128) || new Set(p.creditedSessionIds).size !== p.creditedSessionIds.length) return false;
+      if (!record(p.dailyCounts) || !record(p.unlockedBadges)) return false;
+      let total = 0;
+      for (const [key,count] of Object.entries(p.dailyCounts)) {
+        if (!validDateKey(key) || !validTime(count) || count === 0) return false;
+        total += count;
+        if (!Number.isSafeInteger(total)) return false;
+      }
+      if (total !== p.completedFocusSessions || Object.keys(p.unlockedBadges).some(key => !BADGES.some(([badge]) => badge === key))) return false;
+      return BADGES.every(([key,threshold]) => p.completedFocusSessions >= threshold ? validDateKey(p.unlockedBadges[key]) && (p.dailyCounts[p.unlockedBadges[key]] || 0) > 0 : !hasOwn(p.unlockedBadges,key));
+    }
+    function creditFocus(progress, sessionId, now) {
+      if (progress.creditedSessionIds.includes(sessionId)) return progress;
+      const date = localDateKey(now), total = progress.completedFocusSessions + 1;
+      const unlockedBadges = { ...progress.unlockedBadges };
+      for (const [key,threshold] of BADGES) if (total >= threshold && !hasOwn(unlockedBadges,key)) unlockedBadges[key] = date;
+      return { ...progress, completedFocusSessions:total, totalStars:progress.totalStars+1,
+        cyclePosition:Math.min(4,progress.cyclePosition+1),
+        dailyCounts:{ ...progress.dailyCounts, [date]:(progress.dailyCounts[date] || 0)+1 },
+        creditedSessionIds:[...progress.creditedSessionIds,sessionId], unlockedBadges };
+    }
+    // Local-load validation is deliberately conservative: never overwrite unknown data.
+    function validate(s) {
+      if (!s || s.schemaVersion !== 1 || !s.settings || !s.progress || !s.timer) return false;
+      for (const mode of MODES) {
+        const n = s.settings[mode + 'Minutes'];
+        if (!Number.isInteger(n) || n < RANGES[mode][0] || n > RANGES[mode][1]) return false;
+      }
+      if (s.profile && (typeof s.profile.displayName !== 'string' || cleanName(s.profile.displayName) !== s.profile.displayName || !['custom','generated'].includes(s.profile.nameType) || typeof s.profile.onboardingCompleted !== 'boolean' || (s.profile.onboardingCompleted && !s.profile.displayName))) return false;
+      if (['autoStartBreaks','autoStartFocus','tickingEnabled','tickDuringBreaks','focusCompletionSound','breakCompletionSound','fullCycleSound'].some(key => hasOwn(s.settings,key) && typeof s.settings[key] !== 'boolean')) return false;
+      if (hasOwn(s.settings,'tickingStyle') && s.settings.tickingStyle !== 'soft') return false;
+      for (const key of ['tickingVolume','notificationVolume']) if (hasOwn(s.settings,key) && (!Number.isInteger(s.settings[key]) || s.settings[key] < 0 || s.settings[key] > 100 || s.settings[key] % 5 !== 0)) return false;
+      if (s.settings.language !== undefined && !['ms','en'].includes(s.settings.language)) return false;
+      if (s.settings.theme !== undefined && !['system','light','dark'].includes(s.settings.theme)) return false;
+      const t = s.timer;
+      if (!MODES.includes(t.mode) || !['idle','running','paused','completed'].includes(t.status)) return false;
+      if (typeof t.sessionId !== 'string' || !t.sessionId.length || t.sessionId.length > 128) return false;
+      if (!validTime(t.sessionDurationMs) || t.sessionDurationMs < RANGES[t.mode][0]*60000 || t.sessionDurationMs > RANGES[t.mode][1]*60000) return false;
+      if (!validTime(t.remainingMs) || t.remainingMs > t.sessionDurationMs) return false;
+      if (!Number.isInteger(s.progress.cyclePosition) || s.progress.cyclePosition < 0 || s.progress.cyclePosition > 4) return false;
+      if (!validRewards(s.progress)) return false;
+      if (t.status === 'running') return validTime(t.endAt) && t.endAt >= t.remainingMs && t.remainingMs > 0;
+      if (t.endAt !== null) return false;
+      if (t.status === 'completed') return t.remainingMs === 0;
+      return t.remainingMs > 0 && (t.status !== 'idle' || t.remainingMs === t.sessionDurationMs);
+    }
+    // Pure settlement: timer, cycle, ID ledger and rewards form a single next state.
+    function reconcile(s, now) {
+      const t = s.timer;
+      if (t.status !== 'running' || now < t.endAt) return s;
+      return { ...s, timer:{ ...t, status:'completed', remainingMs:0, endAt:null },
+        progress:t.mode === 'focus' ? creditFocus(s.progress,t.sessionId,now) : s.progress };
+    }
+    function nextMode(s) { return s.timer.mode === 'focus' ? (s.progress.cyclePosition === 4 ? 'longBreak' : 'shortBreak') : 'focus'; }
+    function fresh(s, mode, id) {
+      return { ...s, timer:attempt(mode,s.settings,id), progress:{ ...s.progress, cyclePosition:mode === 'focus' && s.progress.cyclePosition === 4 ? 0 : s.progress.cyclePosition } };
+    }
+    function transition(state, action, now, id) {
+      const s = reconcile(state, now), t = s.timer;
+      switch (action.type) {
+        case 'primary':
+          if (t.status === 'completed') return fresh(s,nextMode(s),id);
+          if (t.status === 'running') return { ...s, timer:{ ...t, status:'paused', remainingMs:remaining(t,now), endAt:null } };
+          return { ...s, timer:{ ...t, status:'running', endAt:now+t.remainingMs } };
+        case 'reset': return fresh(s,t.mode,id);
+        case 'skip': return fresh(s,nextMode(s),id);
+        case 'mode': return MODES.includes(action.mode) && action.mode !== t.mode ? fresh(s,action.mode,id) : s;
+        default: return s;
+      }
+    }
+    // One completion per observation; never backdate or replay unattended sessions.
+    function settleSession(s, now, id, allowAutomatic = true) {
+      const completed = reconcile(s,now);
+      if (completed === s || !allowAutomatic) return completed;
+      const enabled = s.timer.mode === 'focus' ? s.settings.autoStartBreaks : s.settings.autoStartFocus;
+      if (!enabled || id === s.timer.sessionId || s.progress.creditedSessionIds.includes(id)) return completed;
+      const next = fresh(completed,nextMode(completed),id);
+      return { ...next, timer:{ ...next.timer, status:'running', endAt:now+next.timer.remainingMs } };
+    }
+    // Clock guard: freeze the last trustworthy remaining time on an observable jump.
+    function guardClock(s, previous, wall, monotonic) {
+      if (!previous || s.timer.status !== 'running') return { state:s, anomaly:false };
+      if (Math.abs((wall-previous.wall)-(monotonic-previous.monotonic)) <= 60000 && remaining(s.timer,wall) <= s.timer.sessionDurationMs) return { state:s, anomaly:false };
+      const ms = Math.min(s.timer.sessionDurationMs, Math.max(1,remaining(s.timer,previous.wall)));
+      return { state:{ ...s, timer:{ ...s.timer, status:'paused', remainingMs:ms, endAt:null } }, anomaly:true };
+    }
+    // Storage boundary: failure is explicit; malformed/future data is preserved.
+    function load(storage, id) {
+      const fallback = initial(id);
+      let raw;
+      try { raw = storage.getItem(KEY); }
+      catch { return { state:fallback, writable:false, issue:'unavailable' }; }
+      if (raw === null) return { state:fallback, writable:true, issue:null };
+      try {
+        const parsed = JSON.parse(raw);
+        return validate(parsed) ? { state:{ ...parsed, profile:parsed.profile || fallback.profile,
+          settings:{ ...fallback.settings, ...parsed.settings },
+          progress:REWARD_FIELDS.every(key => !hasOwn(parsed.progress,key)) ? { ...parsed.progress, ...emptyRewards() } : parsed.progress }, writable:true, issue:null } : { state:fallback, writable:false, issue:'invalid' };
+      } catch { return { state:fallback, writable:false, issue:'invalid' }; }
+    }
+    function save(storage, state) { try { storage.setItem(KEY,JSON.stringify(state)); return true; } catch { return false; } }
+    // Strict backup contract; intentionally separate from forgiving local migration.
+    const MAX_BACKUP_BYTES = 5 * 1024 * 1024;
+    const FIELDS = {
+      state:['schemaVersion','profile','settings','timer','progress'],
+      profile:['displayName','nameType','onboardingCompleted'],
+      settings:['focusMinutes','shortBreakMinutes','longBreakMinutes','language','theme',...OPTIONAL_SETTINGS],
+      timer:['sessionId','mode','status','remainingMs','endAt','sessionDurationMs'],
+      progress:['cyclePosition',...REWARD_FIELDS]
+    };
+    const exact = (object,keys) => record(object) && Object.keys(object).length === keys.length && keys.every(key => hasOwn(object,key));
+    const pick = (object,keys) => Object.fromEntries(keys.map(key => [key,object[key]]));
+    function strictState(s) {
+      if (!exact(s,FIELDS.state) || !['profile','timer','progress'].every(key => exact(s[key],FIELDS[key])) || !record(s.settings) || !exact(s.settings,FIELDS.settings.filter(key => !OPTIONAL_SETTINGS.includes(key) || hasOwn(s.settings,key)))) return false;
+      if (!validate(s) || !validRewards(s.progress) || s.timer.sessionDurationMs % 60000 !== 0 || (s.timer.endAt !== null && s.timer.endAt > 8640000000000000)) return false;
+      if (!['ms','en'].includes(s.settings.language) || !['system','light','dark'].includes(s.settings.theme)) return false;
+      const credited = s.progress.creditedSessionIds.includes(s.timer.sessionId);
+      return !credited || (s.timer.status === 'completed' && s.timer.mode === 'focus');
+    }
+    function projectState(s) {
+      return { schemaVersion:1, profile:pick(s.profile,FIELDS.profile), settings:{autoStartBreaks:false,autoStartFocus:false,...SOUND_DEFAULTS,...pick(s.settings,FIELDS.settings.filter(key => hasOwn(s.settings,key)))}, timer:pick(s.timer,FIELDS.timer),
+        progress:{ ...pick(s.progress,FIELDS.progress), dailyCounts:{...s.progress.dailyCounts}, creditedSessionIds:[...s.progress.creditedSessionIds], unlockedBadges:{...s.progress.unlockedBadges} } };
+    }
+    function utf8Size(text) {
+      let bytes = 0;
+      for (const char of text) { const cp = char.codePointAt(0); bytes += cp <= 127 ? 1 : cp <= 2047 ? 2 : cp <= 65535 ? 3 : 4; }
+      return bytes;
+    }
+    function exportBackup(s, now) {
+      const snapshot = projectState(s);
+      if (!strictState(snapshot)) throw new Error('backupInvalid');
+      const text = JSON.stringify({schemaVersion:1,exportedAt:new Date(now).toISOString(),state:snapshot},null,2);
+      if (utf8Size(text) > MAX_BACKUP_BYTES) throw new Error('backupTooLarge');
+      return text;
+    }
+    function parseBackup(text) {
+      if (typeof text !== 'string') throw new Error('backupInvalid');
+      if (utf8Size(text) > MAX_BACKUP_BYTES) throw new Error('backupTooLarge');
+      let data;
+      try {
+        data = JSON.parse(text,(key,value) => {
+          if (['__proto__','prototype','constructor'].includes(key)) throw new Error('unsafe property');
+          return value;
+        });
+      } catch { throw new Error('backupInvalid'); }
+      if (!exact(data,['schemaVersion','exportedAt','state']) || data.schemaVersion !== 1 || typeof data.exportedAt !== 'string' || !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/.test(data.exportedAt) || !Number.isFinite(Date.parse(data.exportedAt)) || new Date(data.exportedAt).toISOString() !== data.exportedAt || !strictState(data.state)) throw new Error('backupInvalid');
+      return { exportedAt:data.exportedAt, state:projectState(data.state) };
+    }
+    function restoreBackup(backup, id) {
+      if (!strictState(backup.state) || backup.state.progress.creditedSessionIds.includes(id)) throw new Error('backupInvalid');
+      const restored = projectState(backup.state);
+      restored.timer = attempt(restored.progress.cyclePosition === 4 ? 'longBreak' : 'focus',restored.settings,id);
+      return restored;
+    }
+    function format(ms) { const seconds = Math.ceil(Math.max(0,ms)/1000); return `${Math.floor(seconds/60).toString().padStart(2,'0')}:${(seconds%60).toString().padStart(2,'0')}`; }
+    return { KEY, MODES, BADGES, MAX_BACKUP_BYTES, exportBackup, parseBackup, restoreBackup, localDateKey, cleanName, nickname, profile, preferences, initial, validate, remaining, reconcile, settleSession, transition, nextMode, guardClock, load, save, format };
+  })();
+  </script>
+  <script id="tick-audio">
+  'use strict';
+  // Audio observes timer state; it never advances, persists or counts time for the timer.
+  const TickAudio = (() => {
+    function create({getSnapshot, AudioContext = globalThis.AudioContext || globalThis.webkitAudioContext,
+      now = () => Date.now(), later = (fn,ms) => setTimeout(fn,ms), cancel = id => clearTimeout(id), onStatus = () => {}, gestureTarget = globalThis.document}) {
+      let context = null, timeout = null, identity = null, voice = null, authorised = false;
+      let suspendedByUs = false, generation = 0, destroyed = false, waking = false, resuming = null;
+      let restorationAttempted = false, listening = false;
+      const consumedCompletions = new Set();
+      const chimeSetting = {focus:'focusCompletionSound',break:'breakCompletionSound',cycle:'fullCycleSound'};
+      const notes = {focus:[659.25],break:[523.25,659.25],cycle:[523.25,659.25,783.99]};
+      const gestureEvents = ['mousedown','touchend','keydown','click'];
+      const report = key => { try { onStatus(key); } catch { /* Feedback must not affect the timer. */ } };
+      const snapshot = () => getSnapshot();
+      function eligible(s) {
+        return s.allowed && s.onboarded && s.settings.tickingEnabled && s.settings.tickingVolume > 0 &&
+          s.timer.status === 'running' && s.timer.endAt > now() &&
+          (s.timer.mode === 'focus' || s.settings.tickDuringBreaks);
+      }
+      function notificationArmed(s) {
+        if (!s.allowed || !s.onboarded || s.timer.status !== 'running' || !(s.settings.notificationVolume > 0)) return false;
+        return s.timer.mode === 'focus' ? s.settings.focusCompletionSound : s.settings.breakCompletionSound || (s.timer.mode === 'longBreak' && s.progress?.cyclePosition === 4 && s.settings.fullCycleSound);
+      }
+      const wantsAudio = s => eligible(s) || notificationArmed(s);
+      function disarm() {
+        if (!listening) return;
+        for (const type of gestureEvents) gestureTarget?.removeEventListener?.(type,unlockFromEvent,true);
+        listening = false;
+      }
+      function unlockFromEvent(event) {
+        if (!event.isTrusted || (event.type === 'keydown' && (event.ctrlKey || event.metaKey || event.altKey || ['Escape','Shift','Control','Alt','Meta','CapsLock','NumLock','PrintScreen'].includes(event.key)))) return;
+        disarm(); gesture();
+      }
+      function blocked() {
+        report('soundBlocked');
+        if (destroyed || listening || !wantsAudio(snapshot()) || !gestureTarget?.addEventListener) return;
+        listening = true;
+        for (const type of gestureEvents) gestureTarget.addEventListener(type,unlockFromEvent,{capture:true,passive:true});
+      }
+      function recovered() { disarm(); report('soundReady'); }
+      function clearSchedule() { if (timeout !== null) cancel(timeout); timeout = null; identity = null; }
+      function sleep() {
+        if (!context || context.state !== 'running' || waking || voice || timeout !== null) return;
+        suspendedByUs = true;
+        try { Promise.resolve(context.suspend()).catch(() => { suspendedByUs = false; }); }
+        catch { suspendedByUs = false; }
+      }
+      function finish(v) {
+        for (const node of [v.oscillator,v.gain]) { try { node?.disconnect(); } catch { /* Already disconnected. */ } }
+        if (voice === v) voice = null;
+        if (!wantsAudio(snapshot())) sleep();
+      }
+      function stopVoice() {
+        if (!voice) return;
+        const v = voice;
+        if (context.state !== 'running') { try { v.oscillator.stop(); } catch { /* No audible tail to fade. */ } finish(v); return; }
+        if (v.stopping) return;
+        v.stopping = true;
+        try {
+          const time = context.currentTime;
+          v.gain.gain.cancelScheduledValues(time);
+          v.gain.gain.setValueAtTime(v.gain.gain.value,time);
+          v.gain.gain.linearRampToValueAtTime(0,time+.004);
+          v.oscillator.stop(time+.005);
+        } catch { finish(v); }
+      }
+      function hush() { generation++; disarm(); clearSchedule(); stopVoice(); if (!voice) sleep(); }
+      function fail() { authorised = false; hush(); blocked(); }
+      function ready(gesture, restore = false) {
+        if (destroyed) return Promise.resolve(false);
+        if (!context) {
+          if (!gesture && !restore) return Promise.resolve(false);
+          if (!AudioContext) { report('soundUnsupported'); return Promise.resolve(false); }
+          try {
+            context = new AudioContext();
+            context.onstatechange = () => {
+              if (destroyed) return;
+              if (context.state !== 'running') {
+                clearSchedule(); stopVoice();
+                if (!suspendedByUs && wantsAudio(snapshot())) blocked();
+              } else {
+                recovered(); if (!waking) sync();
+              }
+            };
+          } catch { report('soundUnsupported'); return Promise.resolve(false); }
+        }
+        if (gesture || restore) authorised = true;
+        if (context.state === 'running' && !suspendedByUs) { recovered(); return Promise.resolve(true); }
+        // A browser can leave an autoplay resume promise pending until activation.
+        // A genuine gesture must call resume again, rather than reuse that promise.
+        if (resuming && !gesture) return resuming;
+        if (!gesture && !restore && (!authorised || !suspendedByUs)) return Promise.resolve(false);
+        if (!suspendedByUs) blocked();
+        suspendedByUs = false; waking = true;
+        try {
+          const attempt = Promise.resolve(context.resume()).then(() => {
+            if (destroyed) return false;
+            if (context.state !== 'running') { blocked(); return false; }
+            recovered(); return true;
+          },() => {
+            if (destroyed) return false;
+            if (context.state === 'running') { recovered(); return true; }
+            fail(); return false;
+          }).finally(() => { if (resuming === attempt) { waking = false; resuming = null; } });
+          resuming = attempt; return attempt;
+        } catch { waking = false; resuming = null; fail(); return Promise.resolve(false); }
+      }
+      function play(volume, preview = false) {
+        if (!context || context.state !== 'running' || voice || volume === 0) return false;
+        let v;
+        try {
+          v = {preview,stopping:false}; voice = v;
+          v.oscillator = context.createOscillator(); v.gain = context.createGain();
+          const time = context.currentTime;
+          v.oscillator.type = 'sine';
+          v.oscillator.frequency.setValueAtTime(720,time);
+          v.oscillator.frequency.exponentialRampToValueAtTime(480,time+.055);
+          // Conservative peak, 6 ms attack and 69 ms decay; all endpoints reach zero.
+          const peak = .12 * volume/100;
+          v.gain.gain.setValueAtTime(0,time);
+          v.gain.gain.linearRampToValueAtTime(peak,time+.006);
+          v.gain.gain.exponentialRampToValueAtTime(.0001,time+.065);
+          v.gain.gain.linearRampToValueAtTime(0,time+.075);
+          v.oscillator.connect(v.gain); v.gain.connect(context.destination);
+          v.oscillator.onended = () => finish(v);
+          v.oscillator.start(time); v.oscillator.stop(time+.08);
+          return true;
+        } catch {
+          if (v) { try { v.oscillator.stop(); } catch { /* Not started. */ } finish(v); }
+          fail(); return false;
+        }
+      }
+      function playChime(kind, volume, preview = false, sessionId = snapshot().timer.sessionId) {
+        if (!notes[kind] || !context || context.state !== 'running' || !authorised || volume === 0 || voice?.kind === 'chime') return false;
+        let v;
+        try {
+          const start = context.currentTime + (voice ? .006 : 0);
+          if (voice) stopVoice();
+          v = {kind:'chime',sound:kind,preview,sessionId,stopping:false}; voice = v;
+          v.oscillator = context.createOscillator(); v.gain = context.createGain();
+          v.oscillator.type = 'sine';
+          notes[kind].forEach((frequency,index) => {
+            const time = start+index*.22;
+            v.oscillator.frequency.setValueAtTime(frequency,time);
+            v.gain.gain.setValueAtTime(0,time);
+            v.gain.gain.linearRampToValueAtTime(.16*volume/100,time+.012);
+            v.gain.gain.exponentialRampToValueAtTime(.0001,time+.165);
+            v.gain.gain.linearRampToValueAtTime(0,time+.18);
+          });
+          v.oscillator.connect(v.gain); v.gain.connect(context.destination);
+          v.oscillator.onended = () => finish(v);
+          v.oscillator.start(start); v.oscillator.stop(start+(notes[kind].length-1)*.22+.20);
+          return true;
+        } catch {
+          if (v) { try { v.oscillator.stop(); } catch { /* Not started. */ } finish(v); }
+          fail(); return false;
+        }
+      }
+      function completion(before, after, live) {
+        const t = before.timer, time = now();
+        if (t.status !== 'running' || time < t.endAt || consumedCompletions.has(t.sessionId)) return;
+        if (!(after.timer.sessionId === t.sessionId && after.timer.status === 'completed') && !(after.timer.sessionId !== t.sessionId && after.timer.status === 'running')) return;
+        consumedCompletions.add(t.sessionId); // Consume silent/missed events too; never queue them for unlock.
+        const current = snapshot(), settings = before.settings;
+        if (!live || !current.allowed || !current.onboarded || !context || context.state !== 'running' || !authorised || settings.notificationVolume === 0) return;
+        if (t.mode === 'focus' && before.progress.creditedSessionIds.includes(t.sessionId)) return;
+        const kind = t.mode === 'focus' ? 'focus' : t.mode === 'longBreak' && before.progress.cyclePosition === 4 && settings.fullCycleSound ? 'cycle' : 'break';
+        if (settings[chimeSetting[kind]]) playChime(kind,settings.notificationVolume,false,after.timer.sessionId);
+      }
+      function schedule(s) {
+        if (timeout !== null) return;
+        const key = s.timer.sessionId+':'+s.timer.endAt;
+        identity = key;
+        const delay = (s.timer.endAt-now()) % 1000 || 1000, target = now()+delay;
+        timeout = later(() => {
+          timeout = null;
+          const current = snapshot(), time = now();
+          if (!eligible(current) || identity !== key || current.timer.sessionId+':'+current.timer.endAt !== key) { sync(); return; }
+          // Late delivery is skipped; never replay a backlog of missed ticks.
+          if (time >= target && time-target <= 150) play(current.settings.tickingVolume);
+          sync();
+        },delay);
+      }
+      function sync() {
+        if (destroyed) return;
+        try {
+          const s = snapshot(), ticking = eligible(s);
+          if (voice?.kind === 'chime' && (!s.allowed || (!voice.preview &&
+            (voice.sessionId !== s.timer.sessionId || ['idle','paused'].includes(s.timer.status) || !s.settings[chimeSetting[voice.sound]] || s.settings.notificationVolume === 0)))) stopVoice();
+          if (!ticking) {
+            clearSchedule();
+            if (voice?.kind !== 'chime' && (!voice?.preview || !s.allowed)) stopVoice();
+          }
+          if (!wantsAudio(s)) {
+            disarm();
+            if (!s.allowed) generation++;
+            if (!voice) sleep();
+            return;
+          }
+          const key = s.timer.sessionId+':'+s.timer.endAt;
+          if (identity !== null && identity !== key) { clearSchedule(); if (voice?.kind !== 'chime') stopVoice(); }
+          if (!context || context.state !== 'running') {
+            clearSchedule();
+            if (!context && !restorationAttempted) {
+              restorationAttempted = true;
+              ready(false,true).then(ok => { if (ok) sync(); });
+            } else if (context && authorised && suspendedByUs) ready(false).then(ok => { if (ok) sync(); });
+            else if (context) blocked();
+            return;
+          }
+          if (!authorised) { blocked(); return; }
+          recovered(); if (ticking) schedule(s);
+        } catch { fail(); }
+      }
+      function gesture() {
+        const s = snapshot();
+        if (!s.allowed || !s.onboarded || !(s.settings.tickingEnabled || (s.settings.notificationVolume > 0 && Object.values(chimeSetting).some(key => s.settings[key])))) return;
+        ready(true).then(ok => { if (ok) sync(); });
+      }
+      function preview(kind = 'tick') {
+        if (!snapshot().allowed) return;
+        hush(); const token = generation;
+        ready(true).then(ok => {
+          if (!ok || token !== generation || !snapshot().allowed || destroyed) return;
+          const volume = snapshot().settings[kind === 'tick' ? 'tickingVolume' : 'notificationVolume'];
+          if (volume === 0) report('soundMuted');
+          else if (kind === 'tick' ? play(volume,true) : playChime(kind,volume,true)) report('soundPreview');
+          sync();
+        });
+      }
+      function destroy() {
+        hush(); destroyed = true;
+        if (context) {
+          context.onstatechange = null;
+          if (voice) { const v = voice; try { v.oscillator.stop(); } catch { /* Already stopped. */ } finish(v); }
+          try { Promise.resolve(context.close()).catch(() => {}); } catch { /* Unsupported close. */ }
+        }
+      }
+      return {sync,gesture,preview,completion,hush,destroy,needsAudio:() => wantsAudio(snapshot())};
+    }
+    return {create};
+  })();
+  </script>
+  <script id="timer-app">
+  'use strict';
+  (() => {
+    // Centralised bilingual copy.
+    const MS = {
+      completionSounds:'Bunyi sesi', focusCompletionSound:'Bunyi tamat fokus', breakCompletionSound:'Bunyi tamat rehat', fullCycleSound:'Bunyi tamat kitaran', notificationVolume:'Kelantangan pemberitahuan', preview:'Pradengar', completionHint:'Bunyi lembut semasa aplikasi aktif. Bunyi yang terlepas tidak dimainkan semula.',
+      enableSound:'Aktifkan Bunyi', focusSounds:'Bunyi Fokus', clockTicking:'Detikan Jam', soundVolume:'Kelantangan', testSound:'Uji Bunyi', tickDuringBreaks:'Detikan Semasa Rehat', soundHint:'Detikan lembut. Audio mungkin berhenti apabila skrin dikunci atau aplikasi di latar belakang.', soundReady:'Audio sedia.', soundPreview:'Bunyi ujian dimainkan.', soundMuted:'Kelantangan 0%: tiada bunyi.', soundBlocked:'Audio dijeda atau disekat. Sentuh halaman atau tekan Aktifkan Bunyi untuk menyambung.', soundUnsupported:'Audio tidak tersedia dalam pelayar ini. Pemasa masih berfungsi.',
+      autoStartBreaks:'Mulakan rehat secara automatik', autoStartFocus:'Mulakan sesi fokus secara automatik', off:'Tutup', on:'Hidup', autoHint:'Apabila kembali, hanya sesi seterusnya bermula, dari sekarang.', autoBoth:'Rehat dan fokus automatik', autoBreaksStatus:'Rehat automatik', autoFocusStatus:'Fokus automatik',
+      navigation:'Navigasi utama', focusEyebrow:'Ruang untuk fokus', welcomeSettings:'Bahasa & tetapan / Language & settings', backToWelcome:'Kembali ke sambutan',
+      achievementIntro:'Setiap sesi ialah satu langkah ke hadapan.', settingsIntro:'Jadikan ruang ini milik anda.', personalise:'Bahasa & paparan', timerSettings:'Nama & pemasa',
+      nextMilestone:'Pencapaian seterusnya', nextHint:'{count} sesi lagi.', nextHintOne:'Satu sesi lagi.', progressTowards:'{count} / {target} sesi fokus',
+      allMilestones:'Semua pencapaian diraih', yourOwnPace:'Teruskan mengikut rentak anda.', oneFocus:'1 sesi fokus', manyFocus:'{count} sesi fokus', lockedShort:'Belum diraih',
+      starRulesTitle:'Cara memperoleh bintang', helpTitle:'Tentang Sukses', greetingEnd:'.',
+      resetTitle:'Set semula sesi ini?', resetSummary:'Pemasa akan kembali ke tempoh penuh.', resetConsequence:'Sesi yang belum selesai tidak memperoleh bintang. Kemajuan dan bintang yang telah diperoleh kekal disimpan.',
+      backup:'Sandaran dan data', backupHint:'Eksport sandaran JSON secara manual. Import menggantikan data selepas semakan dan pengesahan. Had fail: 5 MiB.',
+      exportData:'Eksport sandaran', importData:'Import sandaran JSON', clearData:'Padam semua data setempat', cancel:'Batal',
+      privacy:'Tiada akaun, penjejakan atau penyegerakan awan. Data pelayar dan aplikasi terpasang mungkin berasingan. Memadam data pelayar, menyahpasang atau bertukar peranti boleh menghilangkan kemajuan. Simpan sandaran anda.',
+      backupInvalid:'Sandaran tidak sah, tidak lengkap atau versinya tidak disokong. Data setempat tidak digantikan.', backupTooLarge:'Sandaran melebihi had 5 MiB. Data setempat tidak digantikan.',
+      backupReadFailed:'Fail tidak dapat dibaca. Data setempat tidak digantikan.', downloadUnsupported:'Muat turun fail tidak tersedia dalam pelayar ini.', exported:'Muat turun sandaran diminta. Simpan fail JSON di tempat yang selamat.',
+      importTitle:'Gantikan data dengan sandaran ini?', importSummary:'Nama: {name}\nSesi fokus: {count}\nBintang: {stars}\nDicipta: {date}\nSesi fokus setempat sekarang: {current}',
+      importConsequence:'Profil, tetapan dan kemajuan setempat akan digantikan. Pemasa semasa dibatalkan. Pemasa yang diimport bermula semula dalam keadaan sedia tanpa kredit daripada tarikh akhirnya; rehat panjang yang sudah tiba kekal perlu diambil.',
+      replaceData:'Gantikan data', clearTitle:'Padam semua data setempat?', clearSummary:'Nama, tetapan, pemasa dan kemajuan akan dipadam. Jumlah sesi fokus setempat: {current}.',
+      clearConsequence:'Tindakan ini tidak boleh dibuat asal tanpa sandaran. Pemasa semasa dibatalkan. Fail aplikasi untuk kegunaan luar talian dikekalkan; data laman lain tidak disentuh.',
+      previewChanged:'Data setempat berubah semasa semakan. Semak ringkasan terkini dan sahkan sekali lagi.', replacementFailed:'Perubahan tidak dapat disimpan. Data semasa tidak digantikan.',
+      imported:'Sandaran dipulihkan. Pemasa sedia untuk sesi baharu.', cleared:'Data setempat aplikasi telah dipadam.', noName:'Tiada nama',
+      installHeading:'Pasang dan guna di luar talian', installApp:'Pasang aplikasi',
+      iosHelp:'Pada iPhone/iPad: buka dalam Safari → Kongsi → Tambah ke Skrin Utama. Nama pilihan mungkin berbeza mengikut versi iOS.',
+      androidHelp:'Pada Android: gunakan butang pasang jika tersedia, atau cari Pasang aplikasi / Tambah ke skrin utama dalam menu pelayar. Sokongan berbeza mengikut pelayar.',
+      offlineHint:'Buka sekali dalam talian dan tunggu status sedia sebelum membuka semula di luar talian. Pelayar boleh memadam storan. Bunyi atau amaran semasa aplikasi ditutup tidak dijamin.',
+      offlinePreparing:'Menyediakan aplikasi untuk kegunaan luar talian…', offlineReady:'Aplikasi sedia untuk dibuka semula di luar talian.', offlineUnavailable:'Kegunaan luar talian belum tersedia. Cuba buka semula dalam talian; pemasa masih boleh digunakan.',
+      offlineUnsupported:'Pelayar atau sambungan ini tidak menyokong persediaan luar talian. Gunakan localhost atau HTTPS dalam pelayar yang menyokongnya.',
+      installed:'Aplikasi sedang digunakan dalam mod terpasang.', applyUpdate:'Kemas kini dan buka semula',
+      updateReady:'Kemas kini tersedia. Simpan keadaan semasa dan buka semula apabila bersedia.', updateActive:'Kemas kini menunggu. Selesaikan atau set semula pemasa sebelum mengemas kini.',
+      updateClose:'Tutup semua tetingkap aplikasi dan buka semula untuk menggunakan kemas kini.', updateApplying:'Menerapkan kemas kini…', updateBlocked:'Kemas kini belum diterapkan. Tutup tetingkap aplikasi lain, kemudian buka semula aplikasi ini.',
+      language:'Bahasa', theme:'Paparan', system:'Ikut sistem', light:'Cerah', dark:'Gelap',
+      welcome:'Apa nama panggilan anda?', nameHint:'Nama pilihan sahaja. Disimpan pada peranti ini.', nickname:'Nama panggilan (pilihan)',
+      nameLimit:'Maksimum 30 aksara yang kelihatan.', suggest:'Cadangkan nama', settings:'Tetapan', save:'Simpan tetapan',
+      focusMinutes:'Fokus (5–90 minit)', shortBreakMinutes:'Rehat pendek (1–30 minit)', longBreakMinutes:'Rehat panjang (5–60 minit)',
+      settingsHint:'Nama: maksimum 30 aksara. Tempoh baharu digunakan pada sesi seterusnya atau selepas Set semula. Pemasa yang belum bermula dikemas kini sekarang.',
+      saved:'Tetapan disimpan.', unsaved:'Tetapan digunakan untuk tetingkap ini sahaja; storan tidak tersedia.', greeting:'Hai, ',
+      today:'sesi hari ini', todayOne:'sesi hari ini', stars:'Jumlah bintang', totalFocus:'Jumlah sesi fokus', achievements:'Pencapaian',
+      cycle:'Kitaran {count} / 4', cycleHint:'Empat sesi membentuk satu kitaran, bukan had harian.',
+      starRules:'Satu sesi fokus yang selesai memperoleh satu bintang, termasuk tempoh tersuai 5–90 minit. Jeda dan sambung dibenarkan. Rehat serta sesi yang dilangkau atau diset semula tidak memperoleh bintang. Sesi baharu selepas Set semula boleh memperoleh bintang apabila selesai.',
+      localProgress:'Kemajuan disimpan pada peranti ini jika storan tersedia. Memadam data pelayar atau bertukar peranti boleh menyebabkan kemajuan hilang.',
+      earned:'Dicapai · {date}', locked:'Belum dicapai · {count} sesi fokus',
+      first_step:'First Step', getting_started:'Getting Started', focus_builder:'Focus Builder', focus_master:'Focus Master', deep_worker:'Deep Worker', focus_legend:'Focus Legend',
+      credited:'Sesi fokus selesai. Satu bintang diperoleh. Seterusnya: ',
+      tagline:'Fokus Hari Ini. Berjaya Esok.', heading:'Satu perkara pada satu masa.',
+      focus:'Fokus', shortBreak:'Rehat pendek', longBreak:'Rehat panjang', reset:'Set semula', skip:'Langkau',
+      start:'Mulakan', pause:'Jeda', resume:'Sambung', continue:'Teruskan', modes:'Mod pemasa', remaining:'Masa berbaki',
+      idle:'Sedia', running:'Berjalan', paused:'Dijeda', completed:'Selesai',
+      ready:'Ambil masa anda. Mulakan apabila bersedia.', rest:'Berhenti seketika. Beri ruang untuk berehat.',
+      focusing:'Tumpukan perhatian pada satu perkara.', pausedHint:'Sambung apabila anda bersedia.',
+      done:'Sesi selesai. Seterusnya: ', clock:'Jam peranti berubah. Pemasa dijeda; semak masa sebelum menyambung.',
+      invalid:'Data tersimpan tidak dapat dibaca atau versinya tidak disokong. Data asal dikekalkan. Pemasa ini hanya berjalan dalam ingatan dan tidak akan dipulihkan selepas dimuat semula.',
+      unavailable:'Pemasa tidak dapat disimpan. Anda boleh terus menggunakannya, tetapi perubahan mungkin hilang apabila halaman dimuat semula.',
+      other:'Pemasa sedang dibuka dalam tetingkap lain. Kawalan di sini tidak aktif. Tutup tetingkap itu, kemudian muat semula halaman ini untuk menyambung.',
+      fallback:'Pelayar ini tidak menyokong kawalan satu tetingkap. Pemasa hanya berjalan dalam ingatan dan tidak akan dipulihkan selepas dimuat semula.',
+      footer:'Pemasa disimpan pada peranti ini jika storan tersedia. Buka semula aplikasi untuk menyemak sesi; amaran latar belakang tidak dijamin.'
+    };
+    const EN = {
+      completionSounds:'Session sounds', focusCompletionSound:'Focus completion sound', breakCompletionSound:'Break completion sound', fullCycleSound:'Full-cycle sound', notificationVolume:'Notification volume', preview:'Preview', completionHint:'Gentle chimes while the app is active. Missed sounds are never replayed.',
+      enableSound:'Enable Sound', focusSounds:'Focus Sounds', clockTicking:'Clock Ticking', soundVolume:'Volume', testSound:'Test Sound', tickDuringBreaks:'Tick During Breaks', soundHint:'Soft ticking. Audio may stop when the screen is locked or the app is in the background.', soundReady:'Audio ready.', soundPreview:'Test sound played.', soundMuted:'Volume 0%: no sound.', soundBlocked:'Audio is paused or blocked. Interact with the page or use Enable Sound to resume.', soundUnsupported:'Audio is unavailable in this browser. The timer still works.',
+      autoStartBreaks:'Auto-start breaks', autoStartFocus:'Auto-start focus sessions', off:'Off', on:'On', autoHint:'After returning, only the next session starts, from now.', autoBoth:'Automatic breaks and focus', autoBreaksStatus:'Automatic breaks', autoFocusStatus:'Automatic focus',
+      navigation:'Main navigation', focusEyebrow:'A little space to focus', welcomeSettings:'Language & settings', backToWelcome:'Back to welcome',
+      achievementIntro:'Every session is a step forward.', settingsIntro:'Make this space your own.', personalise:'Language & appearance', timerSettings:'Name & timer',
+      nextMilestone:'Your next milestone', nextHint:'{count} focus sessions away.', nextHintOne:'One focus session away.', progressTowards:'{count} / {target} focus sessions',
+      allMilestones:'Every milestone, earned', yourOwnPace:'Keep going at your own pace.', oneFocus:'1 focus session', manyFocus:'{count} focus sessions', lockedShort:'Locked',
+      starRulesTitle:'How stars are earned', helpTitle:'About Sukses', greetingEnd:'.',
+      resetTitle:'Reset this session?', resetSummary:'The timer will return to its full duration.', resetConsequence:'An unfinished attempt earns no star. Your completed sessions and earned stars stay saved.',
+      backup:'Backup and data', backupHint:'Export a JSON backup manually. Import replaces data after a preview and confirmation. File limit: 5 MiB.',
+      exportData:'Export backup', importData:'Import JSON backup', clearData:'Clear all local data', cancel:'Cancel',
+      privacy:'No accounts, tracking or cloud sync. Browser and installed-app storage may be separate. Clearing browser data, uninstalling or changing devices may erase progress. Keep a backup.',
+      backupInvalid:'The backup is invalid, incomplete or unsupported. Local data has not been replaced.', backupTooLarge:'The backup exceeds the 5 MiB limit. Local data has not been replaced.',
+      backupReadFailed:'The file could not be read. Local data has not been replaced.', downloadUnsupported:'File downloads are unavailable in this browser.', exported:'A backup download was requested. Keep the JSON file somewhere safe.',
+      importTitle:'Replace data with this backup?', importSummary:'Name: {name}\nFocus sessions: {count}\nStars: {stars}\nCreated: {date}\nCurrent local focus sessions: {current}',
+      importConsequence:'Your local profile, settings and progress will be replaced. The current timer will be cancelled. The imported timer starts idle with no credit from its saved deadline; an already-due long break remains due.',
+      replaceData:'Replace data', clearTitle:'Clear all local data?', clearSummary:'Your name, settings, timer and progress will be removed. Current local focus sessions: {current}.',
+      clearConsequence:'This cannot be undone without a backup. The current timer will be cancelled. Offline app files remain available; other sites’ data is untouched.',
+      previewChanged:'Local data changed during the preview. Review the updated summary and confirm again.', replacementFailed:'The change could not be saved. Your current data has not been replaced.',
+      imported:'Backup restored. The timer is ready for a new session.', cleared:'Local application data has been cleared.', noName:'No name',
+      installHeading:'Install and use offline', installApp:'Install app',
+      iosHelp:'On iPhone/iPad: open in Safari → Share → Add to Home Screen. Wording may vary by iOS version.',
+      androidHelp:'On Android: use the install button when available, or look for Install app / Add to Home screen in the browser menu. Support varies by browser.',
+      offlineHint:'Open once online and wait for ready status before reopening offline. Browsers may evict stored files. Sounds or alerts while the app is closed are not guaranteed.',
+      offlinePreparing:'Preparing the app for offline use…', offlineReady:'The app is ready to reopen offline.', offlineUnavailable:'Offline use is not ready. Try reopening online; the timer remains usable.',
+      offlineUnsupported:'This browser or connection cannot prepare offline use. Use localhost or HTTPS in a supported browser.',
+      installed:'The app is running in installed mode.', applyUpdate:'Update and reopen',
+      updateReady:'An update is available. Save the current state and reopen when ready.', updateActive:'An update is waiting. Finish or reset the timer before updating.',
+      updateClose:'Close all app windows and reopen to use the update.', updateApplying:'Applying the update…', updateBlocked:'The update has not been applied. Close other app windows, then reopen this app.',
+      language:'Language', theme:'Appearance', system:'System', light:'Light', dark:'Dark',
+      welcome:'What should we call you?', nameHint:'An optional nickname, saved on this device.', nickname:'Nickname (optional)',
+      nameLimit:'Up to 30 visible characters.', suggest:'Surprise me', settings:'Settings', save:'Save settings',
+      focusMinutes:'Focus (5–90 minutes)', shortBreakMinutes:'Short break (1–30 minutes)', longBreakMinutes:'Long break (5–60 minutes)',
+      settingsHint:'Name: up to 30 characters. New durations apply to the next session or after Reset. An idle timer updates immediately.',
+      saved:'Settings saved.', unsaved:'Settings applied to this window only; storage is unavailable.', greeting:'Hello, ',
+      today:'sessions today', todayOne:'session today', stars:'Total stars', totalFocus:'Total focus sessions', achievements:'Achievements',
+      cycle:'Cycle {count} / 4', cycleHint:'Four sessions make a cycle, with no daily limit.',
+      starRules:'Each completed focus session earns one star, including custom durations of 5–90 minutes. Pausing and resuming is allowed. Breaks and skipped or reset attempts earn no stars. A fresh attempt after Reset can earn a star when completed.',
+      localProgress:'Progress is saved on this device when storage is available. Clearing browser data or changing devices may erase your progress.',
+      earned:'Earned · {date}', locked:'Locked · {count} focus sessions',
+      first_step:'First Step', getting_started:'Getting Started', focus_builder:'Focus Builder', focus_master:'Focus Master', deep_worker:'Deep Worker', focus_legend:'Focus Legend',
+      credited:'Focus session complete. One star earned. Next: ',
+      tagline:'Focus today. Flourish tomorrow.', heading:'One thing at a time.', focus:'Focus', shortBreak:'Short break', longBreak:'Long break',
+      reset:'Reset', skip:'Skip', start:'Start', pause:'Pause', resume:'Resume', continue:'Continue', modes:'Timer mode', remaining:'Time remaining',
+      idle:'Ready', running:'Running', paused:'Paused', completed:'Completed', ready:'Take your time. Start when you are ready.',
+      rest:'Take a moment. Make room to rest.', focusing:'Give your attention to one thing.', pausedHint:'Resume when you are ready.',
+      done:'Session complete. Next: ', clock:'The device clock changed. The timer is paused; check the time before resuming.',
+      invalid:'Saved data cannot be read or its version is unsupported. The original data is preserved. This timer runs in memory and will not recover after reload.',
+      unavailable:'Changes could not be saved. You can continue, but changes may be lost when this page reloads.',
+      other:'The timer is open in another window. Controls here are inactive. Close that window, then reload this page to continue.',
+      fallback:'This browser does not support single-window control. The timer runs in memory and will not recover after reload.',
+      footer:'The timer is saved on this device when storage is available. Reopen the app to check your session; background alerts are not guaranteed.'
+    };
+    let COPY = EN, storageIssue = null, ownershipIssue = false, savedFeedback = false;
+    const $ = id => document.getElementById(id);
+
+    let sequence = 0, state = null;
+    function newId(extraIds = []) {
+      const used = id => extraIds.includes(id) || (state && (state.timer.sessionId === id || state.progress.creditedSessionIds.includes(id)));
+      let id = globalThis.crypto?.randomUUID ? crypto.randomUUID() : '';
+      while (!id || used(id)) id = `${Date.now().toString(36)}-${Math.random().toString(36).slice(2)}-${++sequence}`;
+      return id;
+    }
+    state = TimerCore.initial(newId());
+    let owner = false, persistent = false, storage = null, previous = null, clockWarning = false, releaseOwnership = null;
+    let pendingData = null, dialogOpener = null, dataFeedback = null, fileReadSequence = 0;
+    let registration = null, deferredInstall = null, offlineIssue = 'offlinePreparing', applyingUpdate = false, updateBlocked = false;
+    let activeView = 'focus'; // Presentation only: never persisted in the product state.
+    let lastFeedbackKey = null;
+    let soundStatusKey = null, audioFrozen = false, completionRecovery = true;
+    const audio = TickAudio.create({
+      getSnapshot:() => ({settings:state.settings,timer:state.timer,progress:state.progress,onboarded:state.profile.onboardingCompleted,
+        allowed:owner && !audioFrozen && !pendingData && !applyingUpdate && document.visibilityState !== 'hidden'}),
+      onStatus:key => { soundStatusKey = key; notice('soundStatus',COPY[key]); renderSoundRecovery(); }
+    });
+    function renderSoundRecovery() {
+      $('enableSound').hidden = soundStatusKey !== 'soundBlocked' || !owner || !audio.needsAudio();
+    }
+    function notice(id, message) { if ($(id).textContent !== (message || '')) $(id).textContent = message || ''; $(id).hidden = !message; }
+    function persist() {
+      if (persistent) storageIssue = TimerCore.save(storage,state) ? null : 'unavailable';
+      return persistent && !storageIssue;
+    }
+    function render(now) {
+      COPY = state.settings.language === 'en' ? EN : MS;
+      document.documentElement.lang = state.settings.language;
+      document.documentElement.dataset.theme = state.settings.theme;
+      document.querySelectorAll('[data-copy]').forEach(el => { if (el.textContent !== COPY[el.dataset.copy]) el.textContent = COPY[el.dataset.copy]; });
+      $('modes').setAttribute('aria-label',COPY.modes);
+      $('countdown').setAttribute('aria-label',COPY.remaining);
+      $('language').value = state.settings.language;
+      $('theme').value = state.settings.theme;
+      for (const key of ['tickingEnabled','tickDuringBreaks']) $(key).value = String(state.settings[key] === true);
+      if ($('tickingVolume').value !== String(state.settings.tickingVolume)) $('tickingVolume').value = String(state.settings.tickingVolume);
+      if ($('tickingVolumeValue').textContent !== state.settings.tickingVolume+'%') $('tickingVolumeValue').textContent = state.settings.tickingVolume+'%';
+      $('tickingVolume').setAttribute('aria-valuetext',state.settings.tickingVolume+'%');
+      $('focusSounds').setAttribute('data-enabled',String(state.settings.tickingEnabled));
+      notice('soundStatus',soundStatusKey ? COPY[soundStatusKey] : null);
+      for (const key of ['focusCompletionSound','breakCompletionSound','fullCycleSound']) $(key).value = String(state.settings[key]);
+      $('notificationVolume').value = String(state.settings.notificationVolume);
+      if ($('notificationVolumeValue').textContent !== state.settings.notificationVolume+'%') $('notificationVolumeValue').textContent = state.settings.notificationVolume+'%';
+      $('notificationVolume').setAttribute('aria-valuetext',state.settings.notificationVolume+'%');
+      for (const key of ['autoStartBreaks','autoStartFocus']) $(key).value = String(state.settings[key] === true);
+      $('automaticStatus').hidden = !state.settings.autoStartBreaks && !state.settings.autoStartFocus;
+      $('automaticStatus').textContent = COPY[state.settings.autoStartBreaks && state.settings.autoStartFocus ? 'autoBoth' : state.settings.autoStartBreaks ? 'autoBreaksStatus' : 'autoFocusStatus'];
+      $('welcome').hidden = state.profile.onboardingCompleted || activeView !== 'focus';
+      $('focusView').hidden = !state.profile.onboardingCompleted || activeView !== 'focus';
+      $('achievementsView').hidden = activeView !== 'achievements' || !state.profile.onboardingCompleted;
+      $('settingsView').hidden = activeView !== 'settings';
+      $('onboardingBack').hidden = state.profile.onboardingCompleted;
+      $('appNav').hidden = !state.profile.onboardingCompleted;
+      $('appNav').setAttribute('aria-label',COPY.navigation);
+      $('greeting').textContent = COPY.greeting + state.profile.displayName + COPY.greetingEnd;
+      notice('storageNotice',storageIssue ? COPY[storageIssue] : null);
+      notice('ownershipNotice',ownershipIssue ? COPY.other : null);
+      if (savedFeedback) notice('settingsStatus',persistent && !storageIssue ? COPY.saved : COPY.unsaved);
+      const t = state.timer, left = TimerCore.remaining(t,now);
+      $('countdown').textContent = TimerCore.format(left);
+      $('arc').style.strokeDashoffset = String(1-Math.min(1,left/t.sessionDurationMs));
+      $('phase').textContent = COPY[t.status];
+      $('timerDial').setAttribute('data-status',t.status);
+      const credited = t.mode === 'focus' && state.progress.creditedSessionIds.includes(t.sessionId);
+      const message = clockWarning ? COPY.clock : t.status === 'completed' ? (credited ? COPY.credited : COPY.done)+COPY[TimerCore.nextMode(state)]+'.' : t.status === 'paused' ? COPY.pausedHint : t.mode !== 'focus' ? COPY.rest : t.status === 'running' ? COPY.focusing : COPY.ready;
+      if ($('message').textContent !== message) $('message').textContent = message;
+      $('message').setAttribute('data-important',String(clockWarning || t.status === 'completed'));
+      const feedbackKey = clockWarning ? 'clock:'+t.sessionId : t.status === 'completed' ? 'completed:'+t.sessionId : null;
+      if (feedbackKey !== lastFeedbackKey) {
+        if (feedbackKey && (activeView !== 'focus' || !state.profile.onboardingCompleted)) $('uiStatus').textContent = message;
+        lastFeedbackKey = feedbackKey;
+      }
+      $('primaryLabel').textContent = COPY[t.status === 'running' ? 'pause' : t.status === 'paused' ? 'resume' : t.status === 'completed' ? 'continue' : 'start'];
+      $('primaryIcon').setAttribute('href',t.status === 'running' ? '#i-pause' : t.status === 'completed' ? '#i-arrow' : '#i-play');
+      document.querySelectorAll('button,input,select').forEach(el => { el.disabled = !owner || !!pendingData; });
+      document.querySelectorAll('[data-mode]').forEach(el => el.setAttribute('aria-pressed',String(el.dataset.mode === t.mode)));
+      document.querySelectorAll('[data-view]').forEach(el => {
+        el.disabled = !!pendingData || applyingUpdate;
+        if (el.id.startsWith('nav')) {
+          if (el.dataset.view === activeView) el.setAttribute('aria-current','page');
+          else el.removeAttribute('aria-current');
+        }
+      });
+      renderProgress(now);
+      renderEnvironment();
+      syncNavSpace();
+      audio.sync(); renderSoundRecovery();
+    }
+    function syncNavSpace() {
+      const nav = $('appNav'), shell = $('appShell');
+      if (nav.getBoundingClientRect && shell.style.setProperty) {
+        const height = nav.hidden ? 0 : Math.ceil(nav.getBoundingClientRect().height);
+        if (shell.style.getPropertyValue('--nav-height') !== height+'px') shell.style.setProperty('--nav-height',height+'px');
+      }
+    }
+    // Enlarged labels and safe areas can change the fixed navigation's height.
+    if (typeof ResizeObserver === 'function') new ResizeObserver(syncNavSpace).observe($('appNav'),{box:'border-box'});
+    window.addEventListener('resize',syncNavSpace);
+    const activeTimer = () => ['running','paused'].includes(state.timer.status);
+    function renderEnvironment() {
+      const canReplace = owner && !!releaseOwnership && !!storage && !pendingData;
+      $('clearData').disabled = !canReplace;
+      $('importFile').disabled = !canReplace;
+      $('cancelData').disabled = false;
+      $('confirmData').disabled = !owner;
+      notice('dataStatus',dataFeedback ? COPY[dataFeedback] : null);
+      notice('offlineStatus',COPY[offlineIssue]);
+      $('installApp').hidden = !deferredInstall;
+      $('installApp').disabled = !deferredInstall || !!pendingData;
+      $('updatePanel').hidden = !registration?.waiting && !applyingUpdate && !updateBlocked;
+      const updateKey = updateBlocked ? 'updateBlocked' : applyingUpdate ? 'updateApplying' : activeTimer() ? 'updateActive' : !owner || !persistent || storageIssue ? 'updateClose' : 'updateReady';
+      notice('updateStatus',COPY[updateKey]);
+      $('applyUpdate').disabled = !owner || !persistent || !!storageIssue || activeTimer() || !!pendingData || !releaseOwnership || !registration?.waiting || applyingUpdate;
+    }
+    function renderProgress(now) {
+      const p = state.progress, locale = state.settings.language === 'en' ? 'en-GB' : 'ms-MY';
+      const number = new Intl.NumberFormat(locale);
+      const text = (id,value) => { if ($(id).textContent !== value) $(id).textContent = value; };
+      const today = p.dailyCounts[TimerCore.localDateKey(now)] || 0;
+      text('todayCount',number.format(today));
+      text('todayLabel',today === 1 ? COPY.todayOne : COPY.today);
+      text('starCount',number.format(p.totalStars));
+      text('totalFocusCount',number.format(p.completedFocusSessions));
+      text('achievementStars',number.format(p.totalStars));
+      text('cycleProgress',COPY.cycle.replace('{count}',number.format(p.cyclePosition)));
+      for (let i=1;i<=4;i++) $('cycle-'+i).setAttribute('data-complete',String(p.cyclePosition >= i));
+      for (const [key,threshold] of TimerCore.BADGES) {
+        const date = p.unlockedBadges[key];
+        // Format an already-local calendar label without shifting its day in another timezone.
+        const formatted = date ? new Intl.DateTimeFormat(locale,{year:'numeric',month:'short',day:'numeric',timeZone:'UTC'}).format(new Date(date+'T12:00:00Z')) : '';
+        text('badge-'+key,date ? COPY.earned.replace('{date}',formatted) : COPY.lockedShort);
+        text('badge-requirement-'+key,threshold === 1 ? COPY.oneFocus : COPY.manyFocus.replace('{count}',number.format(threshold)));
+        $('card-'+key).setAttribute('data-earned',String(!!date));
+        $('badge-state-icon-'+key).setAttribute('href',date ? '#i-check' : '#i-lock');
+        const progress = $('badge-progress-'+key);
+        progress.max = threshold; progress.value = Math.min(p.completedFocusSessions,threshold); progress.hidden = !!date;
+      }
+      const next = TimerCore.BADGES.find(([,threshold]) => p.completedFocusSessions < threshold);
+      const name = next ? COPY[next[0]] : COPY.allMilestones;
+      const left = next ? next[1]-p.completedFocusSessions : 0;
+      text('focusMilestoneName',name);
+      text('focusMilestoneHint',next ? (left === 1 ? COPY.nextHintOne : COPY.nextHint.replace('{count}',number.format(left))) : COPY.yourOwnPace);
+      text('nextMilestoneTitle',name);
+      text('nextMilestoneHint',next ? COPY.progressTowards.replace('{count}',number.format(p.completedFocusSessions)).replace('{target}',number.format(next[1])) : COPY.yourOwnPace);
+      $('nextMilestoneProgress').max = next ? next[1] : 1;
+      $('nextMilestoneProgress').value = next ? p.completedFocusSessions : 1;
+      $('nextMilestoneProgress').hidden = !next;
+    }
+    function navigate(view) {
+      if (!['focus','achievements','settings'].includes(view) || pendingData || applyingUpdate || (!state.profile.onboardingCompleted && view === 'achievements')) return;
+      const now = Date.now(); if (owner) settle(now);
+      activeView = view; render(now);
+      const title = view === 'settings' ? 'settingsTitle' : view === 'achievements' ? 'achievementsTitle' : state.profile.onboardingCompleted ? 'greeting' : 'welcomeTitle';
+      $(title).focus(); window.scrollTo?.({top:0,left:0,behavior:'auto'});
+    }
+    document.querySelectorAll('[data-view]').forEach(el => el.addEventListener('click',() => navigate(el.dataset.view)));
+    function settle(now, automatic = false, allowChime = true) {
+      const before = state;
+      const live = allowChime && previous && now >= previous.wall && now-previous.wall <= 2500 && now-before.timer.endAt <= 1500;
+      const monotonic = performance.now();
+      const guarded = TimerCore.guardClock(state,previous,now,monotonic);
+      let next = guarded.state;
+      if (guarded.anomaly) clockWarning = true;
+      else next = TimerCore.settleSession(next,now,newId(),automatic && document.visibilityState !== 'hidden' && !pendingData);
+      previous = { wall:now, monotonic };
+      const automaticallyStarted = next.timer.sessionId !== state.timer.sessionId && next.timer.status === 'running';
+      const completionMessage = state.timer.mode === 'focus' ? COPY.credited : COPY.done;
+      if (next !== state) { state = next; persist(); }
+      if (!guarded.anomaly) audio.completion(before,state,!!live);
+      if (automaticallyStarted) $('uiStatus').textContent = completionMessage + COPY[state.timer.mode] + '.';
+      return guarded.anomaly;
+    }
+    function dispatch(action) {
+      if (!owner) return;
+      const now = Date.now();
+      if (settle(now,false,!['reset','skip','mode'].includes(action.type))) { render(now); return; }
+      const next = TimerCore.transition(state,action,now,newId());
+      if (next !== state) { state = next; clockWarning = false; persist(); }
+      render(now);
+    }
+    function tick(recovering = false) {
+      const now = Date.now();
+      if (owner && !audioFrozen && document.visibilityState !== 'hidden') { settle(now,true,!recovering && !completionRecovery); completionRecovery = false; }
+      render(now);
+    }
+    $('primary').addEventListener('click',() => { audio.gesture(); dispatch({ type:'primary' }); });
+    $('reset').addEventListener('click',() => {
+      audio.hush();
+      if (!owner) return;
+      const now = Date.now(); if (settle(now,false,false)) { render(now); return; }
+      if (activeTimer()) openDataDialog('reset'); else dispatch({type:'reset'});
+    });
+    $('skip').addEventListener('click',() => { audio.hush(); dispatch({ type:'skip' }); });
+    document.querySelectorAll('[data-mode]').forEach(el => el.addEventListener('click',() => { audio.hush(); dispatch({ type:'mode', mode:el.dataset.mode }); }));
+    document.addEventListener('visibilitychange',() => { completionRecovery = true; tick(true); });
+    document.addEventListener('freeze',() => { audioFrozen = true; completionRecovery = true; audio.hush(); });
+    document.addEventListener('resume',() => { audioFrozen = false; tick(true); });
+    window.addEventListener('pageshow',() => tick(true));
+    window.addEventListener('pagehide',event => { if (event.persisted) audio.hush(); else audio.destroy(); });
+    window.addEventListener('storage',event => {
+      if (event.key !== TimerCore.KEY && event.key !== null) return;
+      // Cooperating windows cannot write concurrently; stop on external replacements.
+      if (owner) { owner = false; ownershipIssue = true; }
+      const loaded = TimerCore.load(storage,newId());
+      if (!loaded.issue) state = loaded.state;
+      else storageIssue = loaded.issue;
+      render(Date.now());
+    });
+    function fillSettings() {
+      $('displayName').value = state.profile.displayName;
+      for (const mode of TimerCore.MODES) $(mode+'Minutes').value = state.settings[mode+'Minutes'];
+    }
+    function activate(useStorage) {
+      owner = true;
+      if (useStorage) {
+        try { storage = window.localStorage; } catch { /* load reports unavailable */ }
+        const loaded = TimerCore.load(storage,newId());
+        state = loaded.state; persistent = loaded.writable;
+        if (loaded.issue) storageIssue = loaded.issue;
+      } else storageIssue = 'fallback';
+      // A backward clock after reload may imply more than a full session remains.
+      if (state.timer.status === 'running' && TimerCore.remaining(state.timer,Date.now()) > state.timer.sessionDurationMs) {
+        state = TimerCore.guardClock(state,{ wall:state.timer.endAt-state.timer.remainingMs, monotonic:performance.now() },Date.now(),performance.now()).state;
+        clockWarning = true; persist();
+      }
+      fillSettings(); tick(true);
+      if (!state.profile.onboardingCompleted) $('welcomeTitle').focus();
+    }
+    // Profile and preference actions share timer reconciliation and the persistence boundary.
+    let welcomeGenerated = '', settingsGenerated = '';
+    function finishWelcome(skip) {
+      if (!owner) return;
+      const now = Date.now(); settle(now);
+      const typed = skip ? '' : $('welcomeName').value;
+      state = TimerCore.profile(state,typed,TimerCore.nickname(state.settings.language));
+      if (!skip && welcomeGenerated && state.profile.displayName === welcomeGenerated) state.profile.nameType = 'generated';
+      activeView = 'focus'; persist(); fillSettings(); render(now); $('primary').focus();
+    }
+    $('onboarding').addEventListener('submit',event => { event.preventDefault(); finishWelcome(false); });
+    $('skipWelcome').addEventListener('click',() => finishWelcome(true));
+    $('suggestWelcome').addEventListener('click',() => {
+      welcomeGenerated = TimerCore.nickname(state.settings.language); $('welcomeName').value = welcomeGenerated;
+    });
+    $('suggestSettings').addEventListener('click',() => {
+      settingsGenerated = TimerCore.nickname(state.settings.language); $('displayName').value = settingsGenerated;
+    });
+    for (const id of ['welcomeName','displayName']) $(id).addEventListener('blur',() => { $(id).value = TimerCore.cleanName($(id).value); });
+    for (const key of ['language','theme','autoStartBreaks','autoStartFocus']) $(key).addEventListener('change',() => {
+      if (!owner) return;
+      const now = Date.now(); settle(now);
+      state = TimerCore.preferences(state,{ [key]:key.startsWith('autoStart') ? $(key).value === 'true' : $(key).value },now,newId());
+      persist(); render(now);
+    });
+    for (const key of ['tickingEnabled','tickDuringBreaks','tickingVolume','focusCompletionSound','breakCompletionSound','fullCycleSound','notificationVolume']) {
+      $(key).addEventListener(key.endsWith('Volume') ? 'input' : 'change',() => {
+        if (!owner) return;
+        const now = Date.now(); settle(now);
+        const value = key.endsWith('Volume') ? Number($(key).value) : $(key).value === 'true';
+        state = TimerCore.preferences(state,{[key]:value},now,newId());
+        persist(); render(now);
+        if (state.timer.status === 'running') audio.gesture();
+      });
+    }
+    $('testSound').addEventListener('click',() => { if (owner) audio.preview(); });
+    for (const [id,kind] of [['previewFocus','focus'],['previewBreak','break'],['previewCycle','cycle']]) $(id).addEventListener('click',() => { if (owner) audio.preview(kind); });
+    $('enableSound').addEventListener('click',event => { if (owner && event.isTrusted) audio.gesture(); });
+    $('settingsForm').addEventListener('submit',event => {
+      event.preventDefault(); if (!owner || !$('settingsForm').reportValidity()) return;
+      const now = Date.now(); settle(now);
+      const patch = Object.fromEntries(TimerCore.MODES.map(mode => [mode+'Minutes',Number($(mode+'Minutes').value)]));
+      state = TimerCore.preferences(state,patch,now,newId());
+      state = TimerCore.profile(state,$('displayName').value,TimerCore.nickname(state.settings.language));
+      if (settingsGenerated && state.profile.displayName === settingsGenerated) state.profile.nameType = 'generated';
+      persist(); savedFeedback = true; fillSettings(); render(now);
+    });
+    // Backup preview/confirmation. Replacement is committed only after a successful write.
+    function errorFeedback(error) {
+      dataFeedback = ['backupInvalid','backupTooLarge','downloadUnsupported'].includes(error?.message) ? error.message : 'backupReadFailed';
+      render(Date.now());
+    }
+    function closeDataDialog() {
+      const dialog = $('dataDialog');
+      if (typeof dialog.close === 'function' && dialog.open) dialog.close();
+      dialog.removeAttribute('open'); dialog.hidden = true;
+      $('appShell').removeAttribute('aria-hidden');
+      pendingData = null;
+      render(Date.now());
+      if (dialogOpener?.isConnected !== false) dialogOpener?.focus();
+    }
+    function refreshPreview(changed = false) {
+      const p = pendingData, locale = state.settings.language === 'en' ? 'en-GB' : 'ms-MY';
+      const number = new Intl.NumberFormat(locale);
+      p.snapshot = JSON.stringify(state); p.raw = p.kind === 'reset' ? null : storage.getItem(TimerCore.KEY);
+      $('dialogTitle').textContent = COPY[p.kind === 'import' ? 'importTitle' : p.kind === 'reset' ? 'resetTitle' : 'clearTitle'];
+      const values = {current:number.format(state.progress.completedFocusSessions)};
+      if (p.kind === 'import') Object.assign(values,{
+        name:p.backup.state.profile.displayName || COPY.noName,
+        count:number.format(p.backup.state.progress.completedFocusSessions), stars:number.format(p.backup.state.progress.totalStars),
+        date:new Intl.DateTimeFormat(locale,{dateStyle:'medium',timeStyle:'short'}).format(new Date(p.backup.exportedAt))
+      });
+      $('dialogSummary').textContent = COPY[p.kind === 'import' ? 'importSummary' : p.kind === 'reset' ? 'resetSummary' : 'clearSummary'].replace(/\{(\w+)\}/g,(_match,key)=>values[key]);
+      $('dialogConsequence').textContent = COPY[p.kind === 'import' ? 'importConsequence' : p.kind === 'reset' ? 'resetConsequence' : 'clearConsequence'];
+      $('confirmData').textContent = COPY[p.kind === 'import' ? 'replaceData' : p.kind === 'reset' ? 'reset' : 'clearData'];
+      notice('dialogChanged',changed ? COPY.previewChanged : null);
+    }
+    function openDataDialog(kind, backup = null) {
+      if (!owner || (kind !== 'reset' && (!releaseOwnership || !storage))) return;
+      if (pendingData) closeDataDialog();
+      dataFeedback = null;
+      settle(Date.now()); render(Date.now());
+      pendingData = {kind,backup}; dialogOpener = document.activeElement;
+      try { refreshPreview(); }
+      catch { pendingData = null; dataFeedback = 'replacementFailed'; render(Date.now()); return; }
+      const dialog = $('dataDialog'); dialog.hidden = false;
+      dialog.setAttribute('data-kind',kind);
+      if (typeof dialog.showModal === 'function') dialog.showModal();
+      else { dialog.setAttribute('open',''); dialog.setAttribute('data-fallback',''); $('appShell').setAttribute('aria-hidden','true'); }
+      if (dialog.scrollHeight > dialog.clientHeight) { $('dialogTitle').focus(); dialog.scrollTop = 0; }
+      else $('cancelData').focus();
+      render(Date.now());
+    }
+    $('cancelData').addEventListener('click',closeDataDialog);
+    $('dataDialog').addEventListener('cancel',event => { event.preventDefault(); closeDataDialog(); });
+    document.addEventListener('focusin',event => {
+      if (pendingData && !$('dataDialog').contains(event.target)) $('cancelData').focus();
+    });
+    $('dataDialog').addEventListener('keydown',event => {
+      if (event.key === 'Escape') { event.preventDefault(); closeDataDialog(); }
+      if (event.key === 'Tab') {
+        const buttons = Array.from($('dataDialog').querySelectorAll('button:not([disabled])'));
+        const first = buttons[0], last = buttons[buttons.length-1];
+        if (event.shiftKey && (document.activeElement === first || document.activeElement === $('dialogTitle'))) { event.preventDefault(); last?.focus(); }
+        else if (!event.shiftKey && (document.activeElement === last || document.activeElement === $('dialogTitle'))) { event.preventDefault(); first?.focus(); }
+      }
+    });
+    $('clearData').addEventListener('click',() => openDataDialog('clear'));
+    $('confirmData').addEventListener('click',() => {
+      if (!pendingData || !owner || (pendingData.kind !== 'reset' && (!releaseOwnership || !storage))) return;
+      const now = Date.now();
+      try {
+        if (pendingData.kind === 'reset') {
+          settle(now);
+          if (pendingData.snapshot !== JSON.stringify(state)) { refreshPreview(true); render(now); return; }
+          closeDataDialog(); dispatch({type:'reset'}); return;
+        }
+        // Reject an external replacement before deadline settlement can write over it.
+        if (pendingData.snapshot === JSON.stringify(state) && pendingData.raw !== storage.getItem(TimerCore.KEY)) {
+          owner = false; ownershipIssue = true; closeDataDialog(); return;
+        }
+        settle(now);
+        if (pendingData.snapshot !== JSON.stringify(state)) { refreshPreview(true); render(now); return; }
+        if (pendingData.raw !== storage.getItem(TimerCore.KEY)) {
+          owner = false; ownershipIssue = true; closeDataDialog(); return;
+        }
+        const kind = pendingData.kind;
+        const next = kind === 'import' ? TimerCore.restoreBackup(pendingData.backup,newId(pendingData.backup.state.progress.creditedSessionIds)) : TimerCore.initial(newId());
+        if (kind === 'import') {
+          if (!TimerCore.save(storage,next)) throw new Error('write failed');
+        } else storage.removeItem(TimerCore.KEY);
+        state = next; persistent = true; storageIssue = null; previous = null; clockWarning = false; savedFeedback = false;
+        welcomeGenerated = ''; settingsGenerated = ''; $('welcomeName').value = '';
+        dataFeedback = kind === 'import' ? 'imported' : 'cleared';
+        activeView = 'focus';
+        fillSettings(); closeDataDialog(); render(now);
+        $('uiStatus').textContent = COPY[dataFeedback];
+        if (state.profile.onboardingCompleted) $('primary').focus(); else $('welcomeTitle').focus();
+      } catch { dataFeedback = 'replacementFailed'; storageIssue = 'unavailable'; notice('dialogChanged',COPY.replacementFailed); render(now); }
+    });
+    $('importFile').addEventListener('change',async () => {
+      const file = $('importFile').files?.[0], token = ++fileReadSequence;
+      $('importFile').value = '';
+      if (!file || !owner || !releaseOwnership) return;
+      try {
+        if (file.size > TimerCore.MAX_BACKUP_BYTES) throw new Error('backupTooLarge');
+        const text = typeof file.text === 'function' ? await file.text() : await new Promise((resolve,reject) => {
+          if (typeof FileReader === 'undefined') { reject(new Error('read failed')); return; }
+          const reader = new FileReader(); reader.onload = () => resolve(reader.result); reader.onerror = reject; reader.readAsText(file);
+        });
+        if (token !== fileReadSequence || !owner) return;
+        openDataDialog('import',TimerCore.parseBackup(text));
+      } catch (error) { if (token === fileReadSequence) errorFeedback(error); }
+    });
+    $('exportData').addEventListener('click',() => {
+      if (!owner) return;
+      const now = Date.now(); settle(now);
+      try {
+        if (typeof Blob === 'undefined' || !globalThis.URL?.createObjectURL) throw new Error('downloadUnsupported');
+        const text = TimerCore.exportBackup(state,now), url = URL.createObjectURL(new Blob([text],{type:'application/json'}));
+        const link = document.createElement('a'); link.href = url; link.download = `sukses-backup-${TimerCore.localDateKey(now)}.json`;
+        document.body.append(link); link.click(); link.remove();
+        setTimeout(() => URL.revokeObjectURL(url),30000);
+        dataFeedback = 'exported'; render(now);
+      } catch (error) { errorFeedback(error); }
+    });
+    // Installation and service-worker lifecycle. No automatic takeover/reload.
+    window.addEventListener('beforeinstallprompt',event => { event.preventDefault(); deferredInstall = event; render(Date.now()); });
+    window.addEventListener('appinstalled',() => { deferredInstall = null; render(Date.now()); });
+    $('installApp').addEventListener('click',async () => {
+      const prompt = deferredInstall; if (!prompt) return;
+      deferredInstall = null; render(Date.now());
+      try { await prompt.prompt(); } catch { /* Manual platform guidance remains visible. */ }
+    });
+    $('applyUpdate').addEventListener('click',() => {
+      if (!owner || !releaseOwnership || !persistent || storageIssue || pendingData || !registration?.waiting || applyingUpdate) return;
+      const now = Date.now(); settle(now);
+      if (activeTimer() || !persist()) { render(now); return; }
+      applyingUpdate = true; updateBlocked = false; owner = false; render(now);
+      releaseOwnership(); releaseOwnership = null;
+      registration.waiting.postMessage({type:'ACTIVATE_UPDATE'});
+    });
+    async function prepareOffline() {
+      if (!('serviceWorker' in navigator) || !globalThis.isSecureContext) { offlineIssue = 'offlineUnsupported'; render(Date.now()); return; }
+      navigator.serviceWorker.addEventListener('controllerchange',() => {
+        // Only the explicit update initiator reloads; it has saved and frozen an idle state.
+        if (applyingUpdate && !activeTimer()) window.location.reload();
+      });
+      navigator.serviceWorker.addEventListener('message',event => {
+        if (event.data?.type === 'OFFLINE_STATUS') offlineIssue = event.data.ready ? 'offlineReady' : 'offlineUnavailable';
+        if (event.data?.type === 'UPDATE_BLOCKED') { applyingUpdate = false; updateBlocked = true; }
+        render(Date.now());
+      });
+      try {
+        registration = await navigator.serviceWorker.register('./sw.js',{scope:'./',updateViaCache:'none'});
+        const watchWorker = worker => {
+          if (!worker) return;
+          const inspect = () => {
+            if (worker.state === 'redundant' && !registration.active) offlineIssue = 'offlineUnavailable';
+            render(Date.now());
+          };
+          worker.addEventListener('statechange',inspect); inspect();
+        };
+        registration.addEventListener('updatefound',() => watchWorker(registration.installing));
+        watchWorker(registration.installing);
+        render(Date.now());
+        const ready = await navigator.serviceWorker.ready;
+        ready.active?.postMessage({type:'CHECK_OFFLINE'});
+      } catch { offlineIssue = 'offlineUnavailable'; render(Date.now()); }
+    }
+    render(Date.now());
+    if (navigator.locks?.request) {
+      navigator.locks.request('sukses-timer-writer-v1',{ ifAvailable:true },async lock => {
+        if (!lock) {
+          ownershipIssue = true;
+          try { storage = window.localStorage; } catch { /* load reports unavailable */ }
+          const loaded = TimerCore.load(storage,newId());
+          state = loaded.state;
+          if (loaded.issue) storageIssue = loaded.issue;
+          fillSettings(); render(Date.now()); return;
+        }
+        // Hold ownership for this document's lifetime; the browser releases on close.
+        await new Promise(resolve => { releaseOwnership = resolve; activate(true); });
+      }).catch(() => { if (!owner) activate(false); });
+    } else activate(false);
+    setInterval(tick,1000);
+    prepareOffline();
+  })();
+  </script>
+</body>
+</html>
